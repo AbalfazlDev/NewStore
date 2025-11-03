@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NewStore.Common
 {
-    public class  PasswordHasher
+    public class PasswordHasher
     {
         // Format Markers:
         // IdentityV2: PBKDF2 with HMAC-SHA1, 128-bit salt, 256-bit subkey, 1000 iterations.

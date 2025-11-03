@@ -1,13 +1,18 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NewStore.Application.Interfaces.Contexts;
+using NewStore.Application.Interfaces.FacadPatterns;
+using NewStore.Application.Services.Products.FacadPattern;
 using NewStore.Application.Services.Users.Commands.ChangeStatusUser;
 using NewStore.Application.Services.Users.Commands.EditUser;
+using NewStore.Application.Services.Users.Commands.LoginUser;
 using NewStore.Application.Services.Users.Commands.RegisterUser;
 using NewStore.Application.Services.Users.Commands.RemoveUser;
 using NewStore.Application.Services.Users.Queris.GetRole;
@@ -32,6 +37,18 @@ namespace EndPoint.Site
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            }).AddCookie(options =>
+            {
+                options.LoginPath = new PathString("/");
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(5.0);
+            });
+
             string connectionString = "Data source=ABALFAZLPC\\MYSQL; Initial Catalog = StoreDb; Integrated Security = True;";
             services.AddControllersWithViews();
             services.AddEntityFrameworkSqlServer().AddDbContext<DataBaseContext>(option => option.UseSqlServer(connectionString));
@@ -42,6 +59,9 @@ namespace EndPoint.Site
             services.AddScoped<IRemoveUserService, RemoveUserService>();
             services.AddScoped<IChangeUserStatusService, ChangeUserStatusService>();
             services.AddScoped<IEditUserService, EditUserService>();
+            services.AddScoped<ILoginUserService, LoginUserService>();
+
+            services.AddScoped<IProductFacad,ProductFacad>();
 
         }
 
@@ -64,18 +84,20 @@ namespace EndPoint.Site
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
+                // ۱. روت برای Areas (اگر دارید)
+                endpoints.MapControllerRoute(
+                    name: "areas",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
+
+                // ۲. روت پیش‌فرض — همه چیز را پوشش می‌دهد
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                  name: "areas",
-                  pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                    pattern: "{controller=Home}/{action=Index}/{id?}"
                 );
             });
             //app.UseEndpoints(endpoints =>

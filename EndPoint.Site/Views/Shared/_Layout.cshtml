@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿
+
+<!DOCTYPE html>
 <html lang="en">
 <!-- sherad by mellatweb.com -->
 <head>
@@ -11,21 +13,21 @@
     <title>theme sherad by mellatweb.com</title>
 
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="shortcut icon" href="assets/ico/favicon.ico">
+    <link rel="apple-touch-icon" sizes="144x144" href="~/assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="shortcut icon" href="~/assets/ico/favicon.ico">
 
     <!-- Font Icon -->
     <link href="assets/css/plugin/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- CSS Global -->
-    <link href="assets/css/plugin/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/plugin/bootstrap-rtl.min.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/plugin/bootstrap-select.min.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/plugin/owl.carousel.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/plugin/animate.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/plugin/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/plugin/bootstrap-rtl.min.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/plugin/bootstrap-select.min.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/plugin/owl.carousel.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/plugin/animate.css" rel="stylesheet" type="text/css">
 
     <!-- Custom CSS -->
-    <link href="assets/css/theme.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/theme.css" rel="stylesheet" type="text/css">
 
     <!-- Color CSS -->
     <!--[if lt IE 9]>
@@ -180,57 +182,8 @@
                             <a class="menu-toggle fa fa-close" href="#">  </a>
                             <div class="col-sm-12 login-popup ptb-50">
                                 <!-- Login Starts -->
+                                <partial name="../Authentication/_LoginPartial" />
 
-                                <div class="col-md-4 col-sm-12">
-                                    <div class="login-wrap">
-                                        <h3 class="fsz-25 ptb-15"><span class="light-font">log in </span> <strong>your account </strong>  </h3>
-                                        <p>Log in to your account to discovery all great features in this template.</p>
-                                        <form class="login-form row pt-15">
-                                            <div class="form-group col-md-12 col-sm-6">
-                                                <input required="" type="text" data-original-title="Name is required" class="form-control name input-your-name" placeholder="Username" name="cf_name" value="" data-toggle="tooltip" data-placement="bottom" title="">
-                                            </div>
-                                            <div class="form-group col-md-12 col-sm-6">
-                                                <input required="" type="text" data-original-title="Email is required" class="form-control email input-email" placeholder="Password" name="cf_email" value="" data-toggle="tooltip" data-placement="bottom" title="">
-                                            </div>
-                                            <div class="form-group col-sm-12">
-                                                <label class="checkbox-inline fsz-12"><input type="checkbox" value=""> <span> Keep me logged in </span>  </label>
-                                                <label class="forgot-pw fsz-12"> <a href="#" class="clr-txt-2 pw"> Forgot your password ? </a> </label>
-                                            </div>
-                                            <div class="form-group col-sm-12 pt-15">
-                                                <button type="submit" class="theme-btn btn submit-btn"> <b> LOGIN </b> </button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="col-md-8 col-sm-12">
-                                    <div class="register-wrap">
-                                        <h3 class="fsz-25 ptb-15"><span class="light-font">Don't have an Account? </span> <strong>Register Now </strong>  </h3>
-                                        <p>By creating an account with our store, you will be able to move through the checkout process faster, store multiple shipping addresses, view and track your orders in your account and more.</p>
-                                        <form class="register-form row  pt-15">
-                                            <div class="form-group col-sm-6">
-                                                <input required="" type="text" data-original-title="Login" class="form-control name input-your-name" placeholder="Name" name="cf_name" value="" data-toggle="tooltip" data-placement="bottom" title="">
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <input required="" type="text" data-original-title="Email is required" class="form-control email input-email" placeholder="Email Address" name="cf_email" value="" data-toggle="tooltip" data-placement="bottom" title="">
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <input required="" type="text" class="form-control website input-website" placeholder="Username" name="cf_website" value="" data-toggle="tooltip" data-placement="bottom" title="">
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <input type="text" class="form-control website input-website" placeholder="Phone" name="cf_website" value="" data-toggle="tooltip" data-placement="bottom" title="">
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <input required="" type="text" class="form-control website input-website" placeholder="Password" name="cf_website" value="" data-toggle="tooltip" data-placement="bottom" title="">
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <input required="" type="text" class="form-control website input-website" placeholder="Re - Password" name="cf_website" value="" data-toggle="tooltip" data-placement="bottom" title="">
-                                            </div>
-                                            <div class="form-group col-sm-12 pt-15">
-                                                <button type="submit" class="btn theme-btn-2"> <b> REGISTER NOW </b> </button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
 
                                 <!-- / Login Ends -->
                             </div>
@@ -333,16 +286,19 @@
     </main>
     <!-- /WRAPPER -->
     <!-- JS Global -->
-    <script src="assets/js/plugin/jquery-2.2.4.min.js"></script>
-    <script src="assets/js/plugin/bootstrap.min.js"></script>
-    <script src="assets/js/plugin/bootstrap-select.min.js"></script>
-    <script src="assets/js/plugin/owl.carousel.min.js"></script>
+    <script src="~/assets/js/plugin/jquery-2.2.4.min.js"></script>
+    <script src="~/assets/js/plugin/bootstrap.min.js"></script>
+    <script src="~/assets/js/plugin/bootstrap-select.min.js"></script>
+    <script src="~/assets/js/plugin/owl.carousel.min.js"></script>
+    <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <script src="~/Sweetalert2/sweetalert2.min.js"></script>
 
 
     <!-- Custom JS -->
     <script src="assets/js/theme.js"></script>
 
 
-
+    @RenderSection("Scripts", false)
 </body>
 </html>
+

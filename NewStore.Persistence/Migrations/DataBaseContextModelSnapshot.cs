@@ -19,6 +19,38 @@ namespace NewStore.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
 
+            modelBuilder.Entity("NewStore.Domain.Entities.Product.Category", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("InsertTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("ParentCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("RemoveTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentCategoryId");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("NewStore.Domain.Entities.Users.Role", b =>
                 {
                     b.Property<long>("Id")
@@ -49,21 +81,21 @@ namespace NewStore.Persistence.Migrations
                         new
                         {
                             Id = 1L,
-                            InsertTime = new DateTime(2025, 10, 27, 23, 16, 14, 177, DateTimeKind.Local).AddTicks(2194),
+                            InsertTime = new DateTime(2025, 11, 3, 0, 45, 23, 587, DateTimeKind.Local).AddTicks(4866),
                             IsRemoved = false,
                             Name = "Admin"
                         },
                         new
                         {
                             Id = 2L,
-                            InsertTime = new DateTime(2025, 10, 27, 23, 16, 14, 178, DateTimeKind.Local).AddTicks(7911),
+                            InsertTime = new DateTime(2025, 11, 3, 0, 45, 23, 588, DateTimeKind.Local).AddTicks(8136),
                             IsRemoved = false,
                             Name = "Operator"
                         },
                         new
                         {
                             Id = 3L,
-                            InsertTime = new DateTime(2025, 10, 27, 23, 16, 14, 178, DateTimeKind.Local).AddTicks(7992),
+                            InsertTime = new DateTime(2025, 11, 3, 0, 45, 23, 588, DateTimeKind.Local).AddTicks(8208),
                             IsRemoved = false,
                             Name = "Customer"
                         });
@@ -122,8 +154,20 @@ namespace NewStore.Persistence.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
+                    b.Property<DateTime>("InsertTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRemoved")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("RemoveTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<long>("RoleId")
                         .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("UpdateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
@@ -134,7 +178,17 @@ namespace NewStore.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UsersInRoles");
+                    b.ToTable("UserInRoles");
+                });
+
+            modelBuilder.Entity("NewStore.Domain.Entities.Product.Category", b =>
+                {
+                    b.HasOne("NewStore.Domain.Entities.Product.Category", "ParentCategory")
+                        .WithMany("ChildCategories")
+                        .HasForeignKey("ParentCategoryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("ParentCategory");
                 });
 
             modelBuilder.Entity("NewStore.Domain.Entities.Users.UserInRole", b =>
@@ -154,6 +208,11 @@ namespace NewStore.Persistence.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("NewStore.Domain.Entities.Product.Category", b =>
+                {
+                    b.Navigation("ChildCategories");
                 });
 
             modelBuilder.Entity("NewStore.Domain.Entities.Users.Role", b =>

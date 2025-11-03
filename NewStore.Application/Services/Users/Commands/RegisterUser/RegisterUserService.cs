@@ -1,8 +1,10 @@
 ﻿using NewStore.Application.Interfaces.Contexts;
+using NewStore.Common;
 using NewStore.Common.Dto;
 using NewStore.Domain.Entities.Users;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace NewStore.Application.Services.Users.Commands.RegisterUser
 {
@@ -14,11 +16,12 @@ namespace NewStore.Application.Services.Users.Commands.RegisterUser
             _context = context;
         }
 
-        public ResultDto<ResultRegisterUserDto> Execute(RequestRegisteUserDto request)
+        public ResultDto<ResultRegisterUserDto> Execute(RequestRegisterUserDto request)
         {
             User user = new User();
             ResultDto<ResultRegisterUserDto> result = new ResultDto<ResultRegisterUserDto>();
             List<UserInRole> roles = new List<UserInRole>();
+            string emailRegex = @"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Z0-9.-]+\.[A-Z]{2,}$";
             try
             {
                 if (string.IsNullOrWhiteSpace(request.Email))
@@ -33,7 +36,19 @@ namespace NewStore.Application.Services.Users.Commands.RegisterUser
                         Message = "پست الکترونیک را وارد نمایید"
                     };
                 }
-
+                var match = Regex.Match(request.Email, emailRegex, RegexOptions.IgnoreCase);
+                if (!match.Success)
+                {
+                    return new ResultDto<ResultRegisterUserDto>()
+                    {
+                        Data = new ResultRegisterUserDto
+                        {
+                            UserId = 0,
+                        },
+                        IsSuccess = false,
+                        Message = "پست الکترونیک معتبر نمی باشد"
+                    };
+                }
                 if (string.IsNullOrWhiteSpace(request.Name))
                 {
                     return new ResultDto<ResultRegisterUserDto>()
@@ -111,10 +126,12 @@ namespace NewStore.Application.Services.Users.Commands.RegisterUser
                         UserId = user.Id
                     });
                 }
-
+                PasswordHasher hasher = new PasswordHasher();
                 user.Name = request.Name;
                 user.Email = request.Email;
                 user.UserInRoles = roles;
+                user.IsActive = true;
+                user.Password = hasher.HashPassword(request.Password);
 
                 _context.Users.Add(user);
                 _context.SaveChanges();

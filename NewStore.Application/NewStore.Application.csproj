@@ -13,4 +13,8 @@
     <ProjectReference Include="..\NewStore.Domain\NewStore.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\Products\Queris\" />
+  </ItemGroup>
+
 </Project>

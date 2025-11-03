@@ -3,54 +3,72 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace NewStore.Persistence.Migrations
 {
-    public partial class addFilter : Migration
+    public partial class editCategory : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterColumn<long>(
+                name: "ParentCategoryId",
+                table: "Categories",
+                type: "bigint",
+                nullable: true,
+                oldClrType: typeof(long),
+                oldType: "bigint");
+
             migrationBuilder.UpdateData(
                 table: "Roles",
                 keyColumn: "Id",
                 keyValue: 1L,
                 column: "InsertTime",
-                value: new DateTime(2025, 10, 27, 22, 55, 52, 855, DateTimeKind.Local).AddTicks(2039));
+                value: new DateTime(2025, 11, 3, 0, 45, 23, 587, DateTimeKind.Local).AddTicks(4866));
 
             migrationBuilder.UpdateData(
                 table: "Roles",
                 keyColumn: "Id",
                 keyValue: 2L,
                 column: "InsertTime",
-                value: new DateTime(2025, 10, 27, 22, 55, 52, 856, DateTimeKind.Local).AddTicks(5979));
+                value: new DateTime(2025, 11, 3, 0, 45, 23, 588, DateTimeKind.Local).AddTicks(8136));
 
             migrationBuilder.UpdateData(
                 table: "Roles",
                 keyColumn: "Id",
                 keyValue: 3L,
                 column: "InsertTime",
-                value: new DateTime(2025, 10, 27, 22, 55, 52, 856, DateTimeKind.Local).AddTicks(6064));
+                value: new DateTime(2025, 11, 3, 0, 45, 23, 588, DateTimeKind.Local).AddTicks(8208));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterColumn<long>(
+                name: "ParentCategoryId",
+                table: "Categories",
+                type: "bigint",
+                nullable: false,
+                defaultValue: 0L,
+                oldClrType: typeof(long),
+                oldType: "bigint",
+                oldNullable: true);
+
             migrationBuilder.UpdateData(
                 table: "Roles",
                 keyColumn: "Id",
                 keyValue: 1L,
                 column: "InsertTime",
-                value: new DateTime(2025, 10, 27, 22, 31, 23, 449, DateTimeKind.Local).AddTicks(6677));
+                value: new DateTime(2025, 11, 3, 0, 40, 3, 358, DateTimeKind.Local).AddTicks(9631));
 
             migrationBuilder.UpdateData(
                 table: "Roles",
                 keyColumn: "Id",
                 keyValue: 2L,
                 column: "InsertTime",
-                value: new DateTime(2025, 10, 27, 22, 31, 23, 451, DateTimeKind.Local).AddTicks(726));
+                value: new DateTime(2025, 11, 3, 0, 40, 3, 360, DateTimeKind.Local).AddTicks(2428));
 
             migrationBuilder.UpdateData(
                 table: "Roles",
                 keyColumn: "Id",
                 keyValue: 3L,
                 column: "InsertTime",
-                value: new DateTime(2025, 10, 27, 22, 31, 23, 451, DateTimeKind.Local).AddTicks(811));
+                value: new DateTime(2025, 11, 3, 0, 40, 3, 360, DateTimeKind.Local).AddTicks(2506));
         }
     }
 }

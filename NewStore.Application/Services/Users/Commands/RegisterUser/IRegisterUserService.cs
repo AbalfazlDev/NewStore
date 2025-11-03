@@ -10,10 +10,10 @@ namespace NewStore.Application.Services.Users.Commands.RegisterUser
 {
     public interface IRegisterUserService
     {
-        ResultDto<ResultRegisterUserDto> Execute(RequestRegisteUserDto request);
+        ResultDto<ResultRegisterUserDto> Execute(RequestRegisterUserDto request);
     }
 
-    public class RequestRegisteUserDto
+    public class RequestRegisterUserDto
     {
         public string Name { get; set; }
         public string Lastname { get; set; }

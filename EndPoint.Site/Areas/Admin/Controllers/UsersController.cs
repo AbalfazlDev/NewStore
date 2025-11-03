@@ -56,7 +56,7 @@ namespace EndPoint.Site.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Create(string name, string lastname, string email, int age, string password, string rePassword, int roleId)
         {
-            RequestRegisteUserDto request = new RequestRegisteUserDto();
+            RequestRegisterUserDto request = new RequestRegisterUserDto();
             request.Name = name;
             request.Lastname = lastname;
             request.Email = email;
@@ -96,6 +96,8 @@ namespace EndPoint.Site.Areas.Admin.Controllers
            ResultDto result= _editUserService.Execute(userId, name, lastname, email);
             return Json(result);
         }
+
+
 
     }
 }
