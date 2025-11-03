@@ -73,6 +73,8 @@
                                 title: "عملیات موفق",
                                 text: data.message,
                                 icon: "success",
+                            }).then(function(){
+                                window.location.replace("@Url.Action("Index", "Categories", new { area = "Admin" })");
                             });
                         }
                         else{
