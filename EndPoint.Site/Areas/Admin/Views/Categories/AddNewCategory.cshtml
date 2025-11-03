@@ -16,11 +16,8 @@
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" id="categoryName" />
+                <input id="parentId" value="@ViewBag.ParentId" style="display:none;" />
                 <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ParentCategoryId" class="control-label" id="parentId">@ViewBag.ParentId</label>
-                <select asp-for="ParentCategoryId" class="form-control" asp-items="ViewBag.ParentCategoryId"></select>
             </div>
             <div class="form-group">
                 <button type="button" id="addCategoryBtn" class="btn btn-primary">ایجاد کردن</button>
@@ -49,6 +46,7 @@
                 'name': name,
                 'parentId': parentId,
             };
+            console.log(postData);
             swal.fire({
                 title: "دسته بندی جدید",
                 text: "دسته بندی جدید اضافه شود ؟",

@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NewStore.Application.Interfaces.FacadPatterns;
+using NewStore.Application.Services.Products.Queris.GetCategories;
+using System.Collections.Generic;
+using System.Net.Sockets;
 
 namespace EndPoint.Site.Areas.Admin.Controllers
 {
+    [Route("Admin/[controller]/[action]")]
     [Area("Admin")]
     public class CategoriesController : Controller
     {
@@ -11,6 +15,13 @@ namespace EndPoint.Site.Areas.Admin.Controllers
         {
             _productFacad = productFacad;
         }
+        
+        public IActionResult Index(long? parentId)
+        { 
+            List<ResultGetCategories> result= _productFacad.GetCategories.Execute(parentId).Data;
+            return View(result);
+        }
+
         [HttpGet]
         public IActionResult AddNewCategory(long? parentId)
         {

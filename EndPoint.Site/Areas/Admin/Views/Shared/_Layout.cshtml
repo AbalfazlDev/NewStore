@@ -1,4 +1,5 @@
-﻿<html lang="fa" dir="rtl" style="--primary01: rgba(108, 95, 252, 0.1); --primary02: rgba(108, 95, 252, 0.2); --primary03: rgba(108, 95, 252, 0.3); --primary06: rgba(108, 95, 252, 0.6); --primary09: rgba(108, 95, 252, 0.9); --primary005: rgba(108, 95, 252, 0.05);">
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<html lang="fa" dir="rtl" style="--primary01: rgba(108, 95, 252, 0.1); --primary02: rgba(108, 95, 252, 0.2); --primary03: rgba(108, 95, 252, 0.3); --primary06: rgba(108, 95, 252, 0.6); --primary09: rgba(108, 95, 252, 0.9); --primary005: rgba(108, 95, 252, 0.05);">
 <head>
 
     <!-- META DATA -->
@@ -422,6 +423,21 @@
                                 <li class="sub-category">
                                     <h3>Main</h3>
                                 </li>
+                                @* ----------------------------------------------------- *@
+                                <li class="slide is-expanded">
+                                    <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)"><i class="side-menu__icon fe fe-slack"></i><span class="side-menu__label">مشاهده دسته‌بندی ها</span><i class="angle fe fe-chevron-right"></i></a>
+                                    <ul class="slide-menu open" style="display: block;">
+                                        <li class="side-menu-label1">
+                                            <a >مشاهده دسته‌بندی‌ها</a>
+                                        </li>
+                                        <li>
+                                            <a asp-area="admin" asp-controller="Categories" asp-action="Index" class="slide-item">مشاهده دسته‌بندی‌ها</a>
+                                        </li>
+                                        <li>
+                                            <a asp-area="admin" asp-controller="Categories" asp-action="AddNewCategory" class="slide-item"> افزودن دسته‌بندی جدید</a>
+                                        </li>
+                                    </ul>
+                                </li>
                                 <li class="slide">
                                     <a class="side-menu__item has-link" data-bs-toggle="slide" href="index.html"><i class="side-menu__icon fe fe-home"></i><span class="side-menu__label">Dashboard</span></a>
                                 </li>
@@ -434,7 +450,7 @@
                                         <li class="side-menu-label1"><a href="javascript:void(0)">Apps</a></li>
                                         <li><a href="~/Admin/users/index" class="slide-item"> لیست کاربران</a></li>
                                         <li><a href="~/Admin/users/create" class="slide-item">کاربر جدید</a></li>
-                                        
+
                                     </ul>
                                 </li>
                                 <li class="slide is-expanded">

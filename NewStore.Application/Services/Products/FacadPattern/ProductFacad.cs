@@ -1,13 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NewStore.Application.Interfaces.Contexts;
+﻿using NewStore.Application.Interfaces.Contexts;
 using NewStore.Application.Interfaces.FacadPatterns;
 using NewStore.Application.Services.Products.Commands.AddCategoryService;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NewStore.Application.Services.Products.Queris.GetCategories;
 
 namespace NewStore.Application.Services.Products.FacadPattern
 {
@@ -19,13 +13,23 @@ namespace NewStore.Application.Services.Products.FacadPattern
             _context = context;
         }
 
-        private IAddCategoryService _addCategory; 
+        private IAddCategoryService _addCategory;
         public IAddCategoryService AddCategory
         {
             get
             {
-                return _addCategory = _addCategory?? new AddCategoryService(_context);
+                return _addCategory = _addCategory ?? new AddCategoryService(_context);
             }
         }
+
+        private IGetCategoriesService _getCategories;
+        public IGetCategoriesService GetCategories
+        {
+            get
+            {
+                return _getCategories = _getCategories ?? new GetCategoriesService(_context);
+            }
+        }
+
     }
 }
