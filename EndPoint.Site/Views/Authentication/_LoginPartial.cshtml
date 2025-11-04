@@ -21,21 +21,21 @@
                 <div class="login-wrap">
                     <h3 class="fsz-25 ptb-15"><span class="light-font">ورود </span> <strong>حساب کاربری</strong>  </h3>
                     <p>Log in to your account to discovery all great features in this template.</p>
-                    <form asp-controller="Authentication" asp-action="Login" method="post" class="login-form row pt-50">
+                    <div class="login-form row pt-50">
                         <div class="form-group col-sm-12">
-                            <input required="" type="text" data-original-title="Email is required" class="form-control email input-email" placeholder="ایمیل" name="email" value="" data-toggle="tooltip" data-placement="bottom" title="">
+                            <input id="loginEmail" required="" type="text" data-original-title="Email is required" class="form-control email input-email" placeholder="ایمیل" name="email" value="" data-toggle="tooltip" data-placement="bottom" title="">
                         </div>
                         <div class="form-group col-sm-12">
-                            <input required="" type="password" data-original-title="Name is required" class="form-control name input-your-name" placeholder="رمز" name="password" value="" data-toggle="tooltip" data-placement="bottom" title="">
+                            <input id="loginPassword" required="" type="password" data-original-title="Name is required" class="form-control name input-your-name" placeholder="رمز" name="password" value="" data-toggle="tooltip" data-placement="bottom" title="">
                         </div>
                         <div class="form-group col-sm-12">
                             <label class="checkbox-inline fsz-12"><input type="checkbox" value=""> <span> وارد ماندن را به خاطر بسپار </span>  </label>
                             <label class="forgot-pw fsz-12"> <a href="#" class="clr-txt-2 pw"> رمز خود را فراموش کرده‌اید ؟ </a> </label>
                         </div>
                         <div class="form-group col-sm-12 pt-15">
-                            <button type="submit" class="theme-btn btn submit-btn"> <b> ورود </b> </button>
+                            <button onclick="loginUser()" type="button" class="theme-btn btn submit-btn"> <b> ورود </b> </button>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
             <div class="col-md-8 col-sm-7">
@@ -120,5 +120,38 @@
             }
         });
     }
+
+    function loginUser() {
+    var email = $("#loginEmail").val();
+    var password = $("#loginPassword").val();
+    var postData = {
+        'email': email,
+        'password': password,
+    }
+
+    $.ajax({
+        contentType: 'application/x-www-form-urlencoded',
+        dataType: 'json',
+        type: 'POST',
+        url: "@Url.Action("Login", "Authentication")",
+        data: postData,
+        success: function (data) {
+            if (data.isSuccess) {
+                window.location.reload();
+            }
+            else {
+                swal.fire({
+                    title: "عملیات شکست خورد",
+                    text: data.message,
+                    icon: "Error",
+                });
+            }
+        },
+        error: function (request, status, error) {
+            alert(request.responseText);
+        }
+    })
+}
+
 </script>
 

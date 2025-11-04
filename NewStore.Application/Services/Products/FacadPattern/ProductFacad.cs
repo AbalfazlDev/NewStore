@@ -1,6 +1,8 @@
-﻿using NewStore.Application.Interfaces.Contexts;
+﻿using Microsoft.AspNetCore.Hosting;
+using NewStore.Application.Interfaces.Contexts;
 using NewStore.Application.Interfaces.FacadPatterns;
 using NewStore.Application.Services.Products.Commands.AddCategoryService;
+using NewStore.Application.Services.Products.Commands.AddNewProduct;
 using NewStore.Application.Services.Products.Queris.GetCategories;
 
 namespace NewStore.Application.Services.Products.FacadPattern
@@ -8,9 +10,11 @@ namespace NewStore.Application.Services.Products.FacadPattern
     public class ProductFacad : IProductFacad
     {
         private readonly IDataBaseContext _context;
-        public ProductFacad(IDataBaseContext context)
+        private readonly IHostingEnvironment _environment;
+        public ProductFacad(IDataBaseContext context,IHostingEnvironment environment)
         {
             _context = context;
+            _environment = environment;
         }
 
         private IAddCategoryService _addCategory;
@@ -28,6 +32,15 @@ namespace NewStore.Application.Services.Products.FacadPattern
             get
             {
                 return _getCategories = _getCategories ?? new GetCategoriesService(_context);
+            }
+        }
+
+        private IAddNewProductService _addNewProduct;
+        public IAddNewProductService AddNewProduct
+        {
+            get
+            {
+                return _addNewProduct = _addNewProduct ?? new AddNewProductService(_context,_environment);
             }
         }
 
