@@ -99,8 +99,7 @@ namespace NewStore.Application.Services.Products.Commands.AddNewProduct
                 {
                     Directory.CreateDirectory(rootFolder);
                 }
-
-                string fileName = DateTime.Now.Ticks.ToString() + file.Name;
+                string fileName = DateTime.Now.Ticks.ToString() + file.FileName;
                 string path = Path.Combine(rootFolder, fileName);
 
                 using (var fileStream = new FileStream(path, FileMode.Create))
@@ -111,7 +110,8 @@ namespace NewStore.Application.Services.Products.Commands.AddNewProduct
                 return new UploadDto()
                 {
                     Status = true,
-                    FileNameAddress = folder + fileName,
+                    
+                    FileNameAddress = Path.Combine(folder, fileName),
                 };
             }
             return null;

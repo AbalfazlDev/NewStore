@@ -1,0 +1,243 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "AddNewProduct";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div class="main-container container-fluid">
+
+    <!-- PAGE-HEADER -->
+    <div class="page-header">
+        <h1 class="page-title">محصول جدید</h1>
+        <div>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Pages</a></li>
+                <li class="breadcrumb-item active" aria-current="page">محصول جدید</li>
+            </ol>
+        </div>
+    </div>
+    <!-- PAGE-HEADER END -->
+    <!-- ROW-1 OPEN -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">اضافه کردن کالا جدید</div>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <label class="col-md-3 form-label">نام کالا</label>
+                        <div class="col-md-9">
+                            <input id="productName" type="text" class="form-control" placeholder="نام">
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <label class="col-md-3 form-label">برند</label>
+                        <div class="col-md-9">
+                            <input id="productBrand" type="text" class="form-control" placeholder="برند">
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <label class="col-md-3 form-label">تعداد موجودی</label>
+                        <div class="col-md-9">
+                            <input id="productToll" type="number" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <label class="col-md-3 form-label">قیمت :</label>
+                        <div class="col-md-9">
+                            <input id="productPrice" type="number" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="form-group">
+                            <label class="custom-switch form-switch mb-0">
+                                <input id="displayedToll" type="checkbox" name="custom-switch-radio" class="custom-switch-input">
+                                <span class="custom-switch-indicator custom-switch-indicator-md"></span>
+                                <span class="custom-switch-description">موجودی نمایش داده شود؟</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <label class="col-md-3 form-label">دسته :</label>
+                        <div class="col-md-9">
+                            <select id="category" asp-items="@ViewBag.Categories" class="form-control form-select select2 " data-bs-placeholder="Select Country" tabindex="-1" aria-hidden="true">
+                                <option value="0">انتخاب نشده</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <label class="col-md-3 form-label">نام و مقدار ویژگی</label>
+                        <div class="col-md-9">
+                            <div class="row mb-4">
+                                <div class="col-auto mb-4">
+                                    <input id="featureName" type="text" class="form-control" placeholder="نام">
+                                </div>
+                                <div class="col-sm-4 mb-4">
+                                    <input id="featureValue" type="text" class="form-control" placeholder="مقدار">
+                                </div>
+                                <div class="col-sm-2 mb-4">
+                                    <button id="addFeature" class="btn btn-primary">اضافه کردن</button>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="tblFeatures" class="table border text-nowrap text-md-nowrap mb-0 mb-4">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>نام ویژگی</th>
+                                    <th>مقدار ویژگی</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+
+                    </div>
+
+                    <!--Row-->
+                    <div class="row">
+                        <label class="col-md-3 form-label mb-4">Product Upload :</label>
+                        <div class="col-md-9">
+                            <input id="productImages" type="file" name="files" accept=".jpg, .png, image/jpeg, image/png" multiple="" class="ff_fileupload_actions">
+                            @* <div class="ff_fileupload_wrap">
+                                <div class="ff_fileupload_dropzone_wrap">
+                                    <button class="ff_fileupload_dropzone" type="button" aria-label="Browse, drag-and-drop, or paste files to upload">
+                                    </button>
+                                </div>
+                                <table class="ff_fileupload_uploads"></table>
+                            </div> *@
+                        </div>
+                    </div>
+                    <!--End Row-->
+                    <!-- Row -->
+                    <div class="row">
+                        <label class="col-md-3 form-label mb-4">Product Description :</label>
+                        <div class="col-md-9 mb-4">
+                            <div class="richText">
+                                <textarea id="productDescription"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End Row-->
+                </div>
+                <div class="card-footer">
+                    <!--Row-->
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-9">
+                            <a id="btnAddProduct" class="btn btn-primary">اضافه کردن</a>
+                            <a href="javascript:void(0)" class="btn btn-default float-end">کنار گزاشتن</a>
+                        </div>
+                    </div>
+                    <!--End Row-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /ROW-1 CLOSED -->
+</div>
+
+@section Scripts {
+    <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <script src="~/Sweetalert2/sweetalert2.min.js"></script>
+
+    <script>
+
+                $("#addFeature").on('click', function ()
+        {
+            var featureName = $('#featureName').val();
+            var featureValue = $('#featureValue').val();
+
+            if (featureName == '')
+            {
+                swal.fire({
+                    title: "هشدار",
+                    text: ' نام ویژگی را وارد کنید',
+                    icon: 'warning'
+                });
+            }
+            else if (featureValue == '')
+            {
+                swal.fire({
+                    title: "هشدار",
+                    text: 'مقدار ویژگی را وارد کنید',
+                    icon: 'warning'
+                });
+            }
+            else
+            {
+                $('#tblFeatures tbody').append('<tr><td>' + featureName + '</td><td>' + featureValue + '</td><td><a  class="isFeature btn btn-icon  btn-danger"><i class="fe fe-trash"></i></a></td> </tr>');
+                $('#featureName').val('');
+                $('#featureValue').val('');
+            }
+
+            $('#tblFeatures').on('click', '.isFeature', function ()
+            {
+                $(this).closest('tr').remove();
+            });
+
+
+        });
+
+        $('#btnAddProduct').on('click', function ()
+        {
+            console.log("AddProductStart");
+            var data = new FormData();
+            data.append('Name', $('#productName').val());
+            data.append('Brand', $('#productBrand').val());
+            data.append('Price', $('#productPrice').val());
+            data.append('Inventory', $('#productToll').val());
+            data.append('Description',$("#productDescription").val())
+            data.append('Displayed', $('#displayedToll').prop('checked'));
+            data.append('CategoryId', $('#category').find('option:selected').val());
+
+            var productImages = document.getElementById("productImages");
+            var imageNumber = productImages.files.length;
+            if (imageNumber > 0)
+            {
+                for (var i = 0; i < imageNumber; i++)
+                    data.append('image' + i, productImages.files[i]);
+            }
+
+            var dataFeaturesViewModel = $('#tblFeatures tr:gt(0)').map(function ()
+            {
+                return {
+                    Feature: $(this.cells[0]).text(),
+                    Value: $(this.cells[1]).text(),
+                };
+            }).get();
+
+            $.each(dataFeaturesViewModel, function (i, val)
+            {
+                data.append('[' + i + '].Feature', val.Feature);
+                data.append('[' + i + '].Value', val.Value);
+
+            });
+
+            var ajaxRequest = $.ajax({
+                type: "POST",
+                url: "AddNewProduct",
+                contentType: false,
+                processData: false,
+                data: data,
+                seccess: function (confirm)
+                {
+                    console.log("Success");
+                }
+            });
+
+            ajaxRequest.done(function (xhr, textStatus)
+            {
+                // Do other operation
+            });
+        });
+
+
+
+    </script>
+}
+

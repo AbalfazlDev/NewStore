@@ -100,24 +100,24 @@ namespace EndPoint.Site
                     pattern: "{controller=Home}/{action=Index}/{id?}"
                 );
             });
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapAreaControllerRoute(
-            //        name: "AdminArea",
-            //        areaName: "Admin",
-            //        pattern: "admin/{controller=Users}/{action=Index}/{id?}");
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapAreaControllerRoute(
+                    name: "AdminArea",
+                    areaName: "Admin",
+                    pattern: "admin/{controller=Users}/{action=Index}/{id?}");
 
-            //    endpoints.MapControllerRoute(
-            //        name: "areas",
-            //        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                    name: "areas",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
-            //    // اگر کسی به "/" برود، به /admin/users/create هدایتش کن
-            //    endpoints.MapGet("/", context =>
-            //    {
-            //        context.Response.Redirect("/admin/users/index");
-            //        return Task.CompletedTask;
-            //    });
-            //});
+                // اگر کسی به "/" برود، به /admin/users/create هدایتش کن
+                endpoints.MapGet("/", context =>
+                {
+                    context.Response.Redirect("/admin/products/addnewproduct");
+                    return Task.CompletedTask;
+                });
+            });
 
 
         }

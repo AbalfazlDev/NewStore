@@ -3,6 +3,7 @@ using NewStore.Application.Interfaces.Contexts;
 using NewStore.Application.Interfaces.FacadPatterns;
 using NewStore.Application.Services.Products.Commands.AddCategoryService;
 using NewStore.Application.Services.Products.Commands.AddNewProduct;
+using NewStore.Application.Services.Products.Queris.GetAllCategoris;
 using NewStore.Application.Services.Products.Queris.GetCategories;
 
 namespace NewStore.Application.Services.Products.FacadPattern
@@ -11,7 +12,7 @@ namespace NewStore.Application.Services.Products.FacadPattern
     {
         private readonly IDataBaseContext _context;
         private readonly IHostingEnvironment _environment;
-        public ProductFacad(IDataBaseContext context,IHostingEnvironment environment)
+        public ProductFacad(IDataBaseContext context, IHostingEnvironment environment)
         {
             _context = context;
             _environment = environment;
@@ -35,12 +36,21 @@ namespace NewStore.Application.Services.Products.FacadPattern
             }
         }
 
+        private IGetAllCategoriesServise _getAllCategories;
+        public IGetAllCategoriesServise GetAllCategories
+        {
+            get
+            {
+                return _getAllCategories = _getAllCategories ?? new GetAllCategoriesService(_context);
+            }
+        }
+
         private IAddNewProductService _addNewProduct;
         public IAddNewProductService AddNewProduct
         {
             get
             {
-                return _addNewProduct = _addNewProduct ?? new AddNewProductService(_context,_environment);
+                return _addNewProduct = _addNewProduct ?? new AddNewProductService(_context, _environment);
             }
         }
 
