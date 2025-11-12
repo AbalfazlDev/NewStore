@@ -114,7 +114,7 @@ namespace EndPoint.Site
                 // اگر کسی به "/" برود، به /admin/users/create هدایتش کن
                 endpoints.MapGet("/", context =>
                 {
-                    context.Response.Redirect("/admin/products/addnewproduct");
+                    context.Response.Redirect("/admin/products/index");
                     return Task.CompletedTask;
                 });
             });

@@ -1,4 +1,46 @@
-﻿@{
+﻿@using static NewStore.Application.Services.Products.Queris.GetProductForAdmin.GetProductForAdminService
+@addTagHelper *, LazZiya.TagHelpers
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model ProductsForAdmin
+@{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+
+<div>
+    <table class="table border text-nowrap text-md-nowrap table-striped mb-0">
+        <thead>
+            <tr>
+                <th>نام </th>
+                <th>دسته بندی</th>
+                <th>قیمت</th>
+                <th>موجودی</th>
+                <th>نمایش در سایت</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Products)
+            {
+                <tr>
+                    <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">@item.Name</td>
+                    <td>@item.Category</td>
+                    <td>@item.Price</td>
+                    <td>@item.Inventory</td>
+                    <td>@item.Displayed</td>
+                    <td>
+                        <a asp-action="ProductDetails" asp-route-productId="@item.Id" class="btn btn-info-light">نمایش جزئیات</a>
+                        <a class="btn btn-icon btn-danger-light"><i class="fe fe-trash"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <paging total-records="@(int)Model.RowCount"
+            page-no="@Model.CurrentPage"
+            page-size="@Model.PageSize"
+            query-string-key-page-no="page"
+            query-string-key-page-size="pageSize">
+    </paging>
+</div>
+

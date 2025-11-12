@@ -424,17 +424,29 @@
                                     <h3>Main</h3>
                                 </li>
                                 @* ----------------------------------------------------- *@
-                                <li class="slide is-expanded">
+                                <li class="slide">
                                     <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)"><i class="side-menu__icon fe fe-slack"></i><span class="side-menu__label">مشاهده دسته‌بندی ها</span><i class="angle fe fe-chevron-right"></i></a>
-                                    <ul class="slide-menu open" style="display: block;">
+                                    <ul class="slide-menu" style="display: none;">
                                         <li class="side-menu-label1">
-                                            <a >مشاهده دسته‌بندی‌ها</a>
+                                            <a>مشاهده دسته‌بندی‌ها</a>
                                         </li>
                                         <li>
                                             <a asp-area="admin" asp-controller="Categories" asp-action="Index" class="slide-item">مشاهده دسته‌بندی‌ها</a>
                                         </li>
                                         <li>
                                             <a asp-area="admin" asp-controller="Categories" asp-action="AddNewCategory" class="slide-item"> افزودن دسته‌بندی جدید</a>
+                                        </li>
+                                        <li></li>
+                                    </ul>
+                                </li>
+                                <li class="slide is-expanded">
+                                    <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)"><i class="side-menu__icon fe fe-slack"></i><span class="side-menu__label">بخش محصولات</span><i class="angle fe fe-chevron-right"></i></a>
+                                    <ul class="slide-menu" style="display: none;">
+                                        <li>
+                                            <a asp-controller="Products" asp-action="Index" class="slide-item">مشاهده محصولات</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Products" asp-action="AddNewProduct" class="slide-item"> افزودن محصول جدید</a>
                                         </li>
                                     </ul>
                                 </li>

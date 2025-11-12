@@ -5,6 +5,8 @@ using NewStore.Application.Services.Products.Commands.AddCategoryService;
 using NewStore.Application.Services.Products.Commands.AddNewProduct;
 using NewStore.Application.Services.Products.Queris.GetAllCategoris;
 using NewStore.Application.Services.Products.Queris.GetCategories;
+using NewStore.Application.Services.Products.Queris.GetProductDetailsForAdmin;
+using NewStore.Application.Services.Products.Queris.GetProductForAdmin;
 
 namespace NewStore.Application.Services.Products.FacadPattern
 {
@@ -51,6 +53,24 @@ namespace NewStore.Application.Services.Products.FacadPattern
             get
             {
                 return _addNewProduct = _addNewProduct ?? new AddNewProductService(_context, _environment);
+            }
+        }
+
+        private IGetProductForAdminService _getProductForAdmin;
+        public IGetProductForAdminService GetProductForAdmin
+        {
+            get
+            {
+                return _getProductForAdmin = _getProductForAdmin ?? new GetProductForAdminService(_context);
+            }
+        }
+
+        private IGetProductDetailsForAdminService _getProductDetailsForAdmin;
+        public IGetProductDetailsForAdminService GetProductDetailsForAdmin
+        {
+            get
+            {
+                return _getProductDetailsForAdmin = _getProductDetailsForAdmin ?? new GetProductDetailsForAdminService(_context);
             }
         }
 
