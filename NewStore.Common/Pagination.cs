@@ -8,9 +8,9 @@ namespace NewStore.Common
 {
     public static class Pagination
     {
-        public static IEnumerable<TSource> ToPage<TSource>(this IEnumerable<TSource> source, int page, int pageSize, out int rowsCount)
+        public static IEnumerable<TSource> ToPage<TSource>(this IEnumerable<TSource> source, UInt16 page, byte pageSize, out uint rowsCount)
         {
-            rowsCount = source.Count();
+            rowsCount = Convert.ToUInt32(source.Count());
             return source.Skip((page - 1) * pageSize).Take(pageSize);
         }
     }

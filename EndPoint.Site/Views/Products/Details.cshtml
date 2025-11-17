@@ -1,0 +1,592 @@
+﻿@using static NewStore.Application.Services.Products.Queris.GetProductDetails.GetProductDetailsService
+@model ResultGetProductDetails
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="breadcrumb-bg">
+    <div class="theme-container container ">
+        <div class="site-breadcumb white-clr">
+            <h2 class="section-title"><span class="light-font"> بخش</span> <strong class="clr-txt">جزئیات </strong>  </h2>
+            <ol class="breadcrumb breadcrumb-menubar">
+                <li> <a href="#"> خانه  </a> خرید  </li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<section class="shop-wrap sec-space-bottom">
+    <div class="container rel-div pt-50">
+        <div class="row">
+            <div class="col-md-12 pt-15">
+                <div class="product-single sec-space-bottom  clearfix">
+                    <!-- Single Products Slider Starts -->
+                    <div class="col-lg-6 pb-50 col-sm-8 col-sm-offset-2 col-lg-offset-0">
+                        <div class="prod-slider sync1 owl-carousel owl-theme owl-rtl owl-loaded">
+                            <div class="owl-stage-outer">
+                                <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all; width: 2160px;">
+                                    <div class="owl-item active" style="width: 540px; margin-left: 0px;">
+                                        <div class="item">
+                                            <img src="~/@Model.ImagesSrc.FirstOrDefault()" alt="">
+                                        </div>
+                                    </div>
+                                    @foreach (var imageSrc in Model.ImagesSrc)
+                                    {
+                                        <div class="owl-item" style="width: 540px; margin-left: 0px;">
+                                            <div class="item">
+                                                <img src="~/@imageSrc" alt="">
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+                            </div><div class="owl-controls">
+                                <div class="owl-nav">
+                                    <div class="owl-prev" style="display: none;">قبلی</div>
+                                    <div class="owl-next" style="display: none;">بعدی</div>
+                                </div><div class="owl-dots" style="">
+                                    <div class="owl-dot active">
+                                        <span></span>
+                                    </div><div class="owl-dot">
+                                        <span></span>
+                                    </div><div class="owl-dot">
+                                        <span>
+
+                                        </span>
+                                    </div><div class="owl-dot">
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sync2 owl-carousel owl-theme owl-rtl owl-loaded">
+
+                            <div class="owl-stage-outer">
+                                <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all; width: 720px;">
+                                    <div class="owl-item synced active" style="width: 180px; margin-left: 0px;">
+                                        <div class="item">
+                                            <a href="#">
+                                                <img src="assets/img/products/thumb-1.png" alt="">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="owl-item active" style="width: 180px; margin-left: 0px;">
+                                        <div class="item">
+                                            <a href="#">
+                                                <img src="assets/img/products/thumb-2.png" alt="">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="owl-item active" style="width: 180px; margin-left: 0px;">
+                                        <div class="item">
+                                            <a href="#">
+                                                <img src="assets/img/products/thumb-3.png" alt="">
+                                            </a>
+                                        </div>
+                                    </div><div class="owl-item" style="width: 180px; margin-left: 0px;">
+                                        <div class="item">
+                                            <a href="#">
+                                                <img src="assets/img/products/thumb-1.png" alt="">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><div class="owl-controls"><div class="owl-nav"><div class="owl-prev" style=""><i class="fa fa-long-arrow-left"></i> قبلی</div><div class="owl-next" style="">بعدی <i class="fa fa-long-arrow-right"></i></div></div><div class="owl-dots" style=""><div class="owl-dot active"><span></span></div><div class="owl-dot"><span></span></div></div></div>
+                        </div>
+                    </div>
+                    <!-- Single Products Slider Ends -->
+
+                    <div class="col-lg-6">
+                        <div class="product-content block-inline">
+
+                            <div class="tag-rate">
+                                <span class="prod-tag tag-1">جدید</span> <span class="prod-tag tag-2">تخفیف ویژه</span>
+                                <div class="rating">
+                                    <span class="star active"></span>
+                                    <span class="star active"></span>
+                                    <span class="star active"></span>
+                                    <span class="star active"></span>
+                                    <span class="star active"></span>
+                                    <span class="fsz-12 gray-color ml-10"> برپایه ۲۵ <a href="#"></a></span>
+                                </div>
+                            </div>
+
+                            <div class="single-caption">
+                                <h3 class="section-title">
+                                    <a href="#"> <span class="light-font"> @Model.title </span>  <strong></strong></a>
+                                </h3>
+                                <span class="divider-2"></span>
+                                <p class="price">
+                                    <strong class="clr-txt fsz-20">@Model.Price.ToString("n0")</strong> <del class="light-font">$65.00 </del>
+                                </p>
+
+                                <div class="fsz-16">
+                                    <p>@Model.Description </p>
+                                </div>
+
+                                <div class="prod-btns">
+                                    <div class="quantity">
+                                        <button class="btn minus"><i class="fa fa-minus-circle"></i></button>
+                                        <input title="Qty" placeholder="03" class="form-control qty" type="text">
+                                        <button class="btn plus"><i class="fa fa-plus-circle"></i></button>
+                                    </div>
+                                    <div class="sort-dropdown">
+                                        <div class="search-selectpicker selectpicker-wrapper">
+                                            <div class="btn-group bootstrap-select input-price" style="width: 100%;">
+                                                <button type="button" class="btn dropdown-toggle btn-default" data-toggle="dropdown" role="button" title="Kilo"><span class="filter-option pull-left">Kilo</span>&nbsp;<span class="bs-caret"><span class="caret"></span></span></button><div class="dropdown-menu open" role="combobox"><ul class="dropdown-menu inner" role="listbox" aria-expanded="false"><li data-original-index="0" class="selected"><a tabindex="0" class="" style="" data-tokens="null" role="option" aria-disabled="false" aria-selected="true"><span class="text">Kilo</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li><li data-original-index="1"><a tabindex="0" class="" style="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><span class="text">2 Kilo</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li><li data-original-index="2"><a tabindex="0" class="" style="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><span class="text">3 Kilo</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li><li data-original-index="3"><a tabindex="0" class="" style="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><span class="text">4 Kilo</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li><li data-original-index="4"><a tabindex="0" class="" style="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><span class="text">5 Kilo</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li></ul></div><select class="selectpicker input-price" data-width="100%" data-toggle="tooltip" tabindex="-98">
+                                                    <option>Kilo</option>
+                                                    <option>2 Kilo</option>
+                                                    <option>3 Kilo</option>
+                                                    <option>4 Kilo</option>
+                                                    <option>5 Kilo</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"> <i class="fa  fa-check-square-o clr-txt"></i> <span>Ready in stock</span> </div>
+                                </div>
+                                <ul class="meta">
+                                    <li> <strong> SKU </strong> <span>: &nbsp;  AB2922-B</span> </li>
+                                    <li> <strong> CATEGORY </strong> <span>:  &nbsp; Fruits</span> </li>
+                                    <li class="tags-widget"> <strong> TAGS </strong> <span>: &nbsp; <a href="#">fruits</a> <a href="#">vegetables</a> <a href="#">juices</a></span> </li>
+                                </ul>
+                                <div class="divider-full-1"></div>
+                                <div class="add-cart pt-15">
+                                    <a href="#" class="theme-btn btn"> <strong> افزودن به سبد خرید </strong> </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="prod-tabs pb-50">
+                    <ul class="tabs fsz-20">
+                        <li class=""><a href="#prod-tab-1" data-toggle="tab"> <span class="light-font">توضیحات </span> <strong>محصول </strong> </a></li>
+                        <li class=""><a href="#prod-tab-2" data-toggle="tab"> <span class="light-font">دیگر </span> <strong>جزئیات </strong> </a></li>
+                        <li class="active"><a href="#prod-tab-3" data-toggle="tab"> <span class="light-font">مرور </span> <strong>نظرات</strong> </a></li>
+                    </ul>
+                    <div class="divider-full-1"></div>
+
+                    <div class="tab-content prod-tab-content">
+                        <div id="prod-tab-1" class="tab-pane fade">
+                            <h3 class="fsz-16"><span class="light-font">توضیحات </span> <strong>محصول </strong>  </h3>
+                            <span class="divider-2 crl-bg"></span>
+
+                            <div class="block-inline pera">
+                                <p>Lorem ipsum dolor sit amet, consectetuer adiping elit food sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat adiping elit food sed diam nonummy nibh euismod tincidunt ut laoreet dolore. </p>
+                            </div>
+
+                        </div>
+                        <div id="prod-tab-2" class="tab-pane fade">
+                            <h3 class="fsz-16"><span class="light-font">دیگر </span> <strong>توضیحات </strong> </h3>
+                            <span class="divider-2 crl-bg"></span>
+
+                            <div class="block-inline pera">
+                                <p>Lorem ipsum dolor sit amet, consectetuer adiping elit food sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat adiping elit food sed diam nonummy nibh euismod tincidunt ut laoreet dolore. </p>
+                            </div>
+                        </div>
+                        <div id="prod-tab-3" class="tab-pane fade in active">
+                            <h3 class="fsz-16"><span class="light-font">customers </span> <strong>reviews </strong> <span class="clr-txt">(3)</span> </h3>
+                            <span class="divider-2 crl-bg"></span>
+
+                            <div class="review-wrap">
+                                <div class="review-img">
+                                    <a href="#"> <img alt="" src="assets/img/extra/review-1.png"> </a>
+                                </div>
+                                <div class="review-caption">
+                                    <h4 class="title fsz-16">
+                                        <a href="#">Luis Nazario Garcia</a>
+                                        <span class="fsz-10 gray-color">26 JUNE 2016</span>
+                                    </h4>
+                                    <div class="rating">
+                                        <span class="star active"></span>
+                                        <span class="star active"></span>
+                                        <span class="star active"></span>
+                                        <span class="star active"></span>
+                                        <span class="star active"></span>
+                                        <span class="fsz-12 gray-color"> Rating : 5/5 </span>
+                                    </div>
+
+                                    <div class="block-inline pera">
+                                        <p>Lorem ipsum dolor sit amet, consectetuer adiping elit food sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat adiping elit food sed diam nonummy nibh euismod tincidunt ut laoreet dolore. </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="review-wrap">
+                                <div class="review-img">
+                                    <a href="#"> <img alt="" src="assets/img/extra/review-1.png"> </a>
+                                </div>
+                                <div class="review-caption">
+                                    <h4 class="title fsz-16">
+                                        <a href="#">Luis Nazario Garcia</a>
+                                        <span class="fsz-10 gray-color">26 JUNE 2016</span>
+                                    </h4>
+                                    <div class="rating">
+                                        <span class="star active"></span>
+                                        <span class="star active"></span>
+                                        <span class="star active"></span>
+                                        <span class="star active"></span>
+                                        <span class="star active"></span>
+                                        <span class="fsz-12 gray-color"> Rating : 5/5 </span>
+                                    </div>
+
+                                    <div class="block-inline pera">
+                                        <p>Lorem ipsum dolor sit amet, consectetuer adiping elit food sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat adiping elit food sed diam nonummy nibh euismod tincidunt ut laoreet dolore. </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="review-wrap">
+                                <div class="review-img">
+                                    <a href="#"> <img alt="" src="assets/img/extra/review-1.png"> </a>
+                                </div>
+                                <div class="review-caption">
+                                    <h4 class="title fsz-16">
+                                        <a href="#">Luis Nazario Garcia</a>
+                                        <span class="fsz-10 gray-color">26 JUNE 2016</span>
+                                    </h4>
+                                    <div class="rating">
+                                        <span class="star active"></span>
+                                        <span class="star active"></span>
+                                        <span class="star active"></span>
+                                        <span class="star active"></span>
+                                        <span class="star active"></span>
+                                        <span class="fsz-12 gray-color"> Rating : 5/5 </span>
+                                    </div>
+
+                                    <div class="block-inline pera">
+                                        <p>Lorem ipsum dolor sit amet, consectetuer adiping elit food sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat adiping elit food sed diam nonummy nibh euismod tincidunt ut laoreet dolore. </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="you-like organic-content pb-50">
+                    <h3 class="fsz-20 pb-15 text-center"><span class="light-font">Related  </span> <strong>Products </strong>  </h3>
+                    <div class="divider-full-1"></div>
+                    <div id="rel-prod-slider" class="rel-prod-slider nav-1 owl-carousel owl-theme owl-rtl owl-loaded">
+
+
+
+
+
+                        <div class="owl-stage-outer">
+                            <div class="owl-stage" style="transform: translate3d(1140px, 0px, 0px); transition: all; width: 4180px;">
+                                <div class="owl-item cloned" style="width: 380px; margin-left: 0px;">
+                                    <div class="item">
+                                        <div class="product-box active">
+                                            <div class="product-media">
+                                                <img class="prod-img" alt="" src="assets/img/products/3.png">
+                                                <img class="shape" alt="" src="assets/img/icons/shap-small.png">
+                                                <div class="prod-icons">
+                                                    <a href="#" class="fa fa-heart"></a>
+                                                    <a href="#" class="fa fa-shopping-basket"></a>
+                                                    <a href="#product-preview" data-toggle="modal" class="fa fa-expand"></a>
+                                                </div>
+                                            </div>
+
+                                            <div class="product-caption">
+                                                <h3 class="product-title">
+                                                    <a href="#"> <span class="light-font"> organic </span>  <strong>cherry</strong></a>
+                                                </h3>
+                                                <div class="price">
+                                                    <strong class="clr-txt">$50.00 </strong> <del class="light-font">$65.00 </del>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><div class="owl-item cloned" style="width: 380px; margin-left: 0px;">
+                                    <div class="item">
+                                        <div class="product-box">
+                                            <div class="product-media">
+                                                <img class="prod-img" alt="" src="assets/img/products/4.png">
+                                                <img class="shape" alt="" src="assets/img/icons/shap-small.png">
+                                                <span class="prod-tag tag-1">new</span> <span class="prod-tag tag-2">sale</span>
+                                                <div class="prod-icons">
+                                                    <a href="#" class="fa fa-heart"></a>
+                                                    <a href="#" class="fa fa-shopping-basket"></a>
+                                                    <a href="#product-preview" data-toggle="modal" class="fa fa-expand"></a>
+                                                </div>
+                                            </div>
+
+                                            <div class="product-caption">
+                                                <h3 class="product-title">
+                                                    <a href="#"> <span class="light-font"> organic </span>  <strong>salad</strong></a>
+                                                </h3>
+                                                <div class="price">
+                                                    <strong class="clr-txt">$50.00 </strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><div class="owl-item cloned" style="width: 380px; margin-left: 0px;">
+                                    <div class="item">
+                                        <div class="product-box">
+                                            <div class="product-media">
+                                                <img class="prod-img" alt="" src="assets/img/products/5.png">
+                                                <img class="shape" alt="" src="assets/img/icons/shap-small.png">
+                                                <div class="prod-icons">
+                                                    <a href="#" class="fa fa-heart"></a>
+                                                    <a href="#" class="fa fa-shopping-basket"></a>
+                                                    <a href="#product-preview" data-toggle="modal" class="fa fa-expand"></a>
+                                                </div>
+                                            </div>
+
+                                            <div class="product-caption">
+                                                <h3 class="product-title">
+                                                    <a href="#"> <span class="light-font"> organic </span>  <strong>pineapple</strong></a>
+                                                </h3>
+                                                <div class="price">
+                                                    <strong class="clr-txt">$50.00 </strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><div class="owl-item active" style="width: 380px; margin-left: 0px;">
+                                    <div class="item">
+                                        <div class="product-box">
+                                            <div class="product-media">
+                                                <img class="prod-img" alt="" src="assets/img/products/1.png">
+                                                <img class="shape" alt="" src="assets/img/icons/shap-small.png">
+                                                <div class="prod-icons">
+                                                    <a href="#" class="fa fa-heart"></a>
+                                                    <a href="#" class="fa fa-shopping-basket"></a>
+                                                    <a href="#product-preview" data-toggle="modal" class="fa fa-expand"></a>
+                                                </div>
+                                            </div>
+                                            <div class="product-caption">
+                                                <h3 class="product-title">
+                                                    <a href="#"> <span class="light-font"> organic </span>  <strong>tomato</strong></a>
+                                                </h3>
+                                                <div class="price">
+                                                    <strong class="clr-txt">$50.00 </strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><div class="owl-item active" style="width: 380px; margin-left: 0px;">
+                                    <div class="item">
+                                        <div class="product-box">
+                                            <div class="product-media">
+                                                <img class="prod-img" alt="" src="assets/img/products/2.png">
+                                                <img class="shape" alt="" src="assets/img/icons/shap-small.png">
+                                                <div class="prod-icons">
+                                                    <a href="#" class="fa fa-heart"></a>
+                                                    <a href="#" class="fa fa-shopping-basket"></a>
+                                                    <a href="#product-preview" data-toggle="modal" class="fa fa-expand"></a>
+                                                </div>
+                                            </div>
+
+                                            <div class="product-caption">
+                                                <h3 class="product-title">
+                                                    <a href="#"> <span class="light-font"> organic </span>  <strong>cabbege</strong></a>
+                                                </h3>
+                                                <div class="price">
+                                                    <strong class="clr-txt">$50.00 </strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><div class="owl-item active" style="width: 380px; margin-left: 0px;">
+                                    <div class="item">
+                                        <div class="product-box active">
+                                            <div class="product-media">
+                                                <img class="prod-img" alt="" src="assets/img/products/3.png">
+                                                <img class="shape" alt="" src="assets/img/icons/shap-small.png">
+                                                <div class="prod-icons">
+                                                    <a href="#" class="fa fa-heart"></a>
+                                                    <a href="#" class="fa fa-shopping-basket"></a>
+                                                    <a href="#product-preview" data-toggle="modal" class="fa fa-expand"></a>
+                                                </div>
+                                            </div>
+
+                                            <div class="product-caption">
+                                                <h3 class="product-title">
+                                                    <a href="#"> <span class="light-font"> organic </span>  <strong>cherry</strong></a>
+                                                </h3>
+                                                <div class="price">
+                                                    <strong class="clr-txt">$50.00 </strong> <del class="light-font">$65.00 </del>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><div class="owl-item" style="width: 380px; margin-left: 0px;">
+                                    <div class="item">
+                                        <div class="product-box">
+                                            <div class="product-media">
+                                                <img class="prod-img" alt="" src="assets/img/products/4.png">
+                                                <img class="shape" alt="" src="assets/img/icons/shap-small.png">
+                                                <span class="prod-tag tag-1">جدید</span> <span class="prod-tag tag-2">sale</span>
+                                                <div class="prod-icons">
+                                                    <a href="#" class="fa fa-heart"></a>
+                                                    <a href="#" class="fa fa-shopping-basket"></a>
+                                                    <a href="#product-preview" data-toggle="modal" class="fa fa-expand"></a>
+                                                </div>
+                                            </div>
+
+                                            <div class="product-caption">
+                                                <h3 class="product-title">
+                                                    <a href="#"> <span class="light-font"> organic </span>  <strong>salad</strong></a>
+                                                </h3>
+                                                <div class="price">
+                                                    <strong class="clr-txt">$50.00 </strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><div class="owl-item" style="width: 380px; margin-left: 0px;">
+                                    <div class="item">
+                                        <div class="product-box">
+                                            <div class="product-media">
+                                                <img class="prod-img" alt="" src="assets/img/products/5.png">
+                                                <img class="shape" alt="" src="assets/img/icons/shap-small.png">
+                                                <div class="prod-icons">
+                                                    <a href="#" class="fa fa-heart"></a>
+                                                    <a href="#" class="fa fa-shopping-basket"></a>
+                                                    <a href="#product-preview" data-toggle="modal" class="fa fa-expand"></a>
+                                                </div>
+                                            </div>
+
+                                            <div class="product-caption">
+                                                <h3 class="product-title">
+                                                    <a href="#"> <span class="light-font"> organic </span>  <strong>pineapple</strong></a>
+                                                </h3>
+                                                <div class="price">
+                                                    <strong class="clr-txt">$50.00 </strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><div class="owl-item cloned" style="width: 380px; margin-left: 0px;">
+                                    <div class="item">
+                                        <div class="product-box">
+                                            <div class="product-media">
+                                                <img class="prod-img" alt="" src="assets/img/products/1.png">
+                                                <img class="shape" alt="" src="assets/img/icons/shap-small.png">
+                                                <div class="prod-icons">
+                                                    <a href="#" class="fa fa-heart"></a>
+                                                    <a href="#" class="fa fa-shopping-basket"></a>
+                                                    <a href="#product-preview" data-toggle="modal" class="fa fa-expand"></a>
+                                                </div>
+                                            </div>
+                                            <div class="product-caption">
+                                                <h3 class="product-title">
+                                                    <a href="#"> <span class="light-font"> organic </span>  <strong>tomato</strong></a>
+                                                </h3>
+                                                <div class="price">
+                                                    <strong class="clr-txt">$50.00 </strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><div class="owl-item cloned" style="width: 380px; margin-left: 0px;">
+                                    <div class="item">
+                                        <div class="product-box">
+                                            <div class="product-media">
+                                                <img class="prod-img" alt="" src="assets/img/products/2.png">
+                                                <img class="shape" alt="" src="assets/img/icons/shap-small.png">
+                                                <div class="prod-icons">
+                                                    <a href="#" class="fa fa-heart"></a>
+                                                    <a href="#" class="fa fa-shopping-basket"></a>
+                                                    <a href="#product-preview" data-toggle="modal" class="fa fa-expand"></a>
+                                                </div>
+                                            </div>
+
+                                            <div class="product-caption">
+                                                <h3 class="product-title">
+                                                    <a href="#"> <span class="light-font"> organic </span>  <strong>cabbege</strong></a>
+                                                </h3>
+                                                <div class="price">
+                                                    <strong class="clr-txt">$50.00 </strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><div class="owl-item cloned" style="width: 380px; margin-left: 0px;">
+                                    <div class="item">
+                                        <div class="product-box active">
+                                            <div class="product-media">
+                                                <img class="prod-img" alt="" src="assets/img/products/3.png">
+                                                <img class="shape" alt="" src="assets/img/icons/shap-small.png">
+                                                <div class="prod-icons">
+                                                    <a href="#" class="fa fa-heart"></a>
+                                                    <a href="#" class="fa fa-shopping-basket"></a>
+                                                    <a href="#product-preview" data-toggle="modal" class="fa fa-expand"></a>
+                                                </div>
+                                            </div>
+
+                                            <div class="product-caption">
+                                                <h3 class="product-title">
+                                                    <a href="#"> <span class="light-font"> organic </span>  <strong>cherry</strong></a>
+                                                </h3>
+                                                <div class="price">
+                                                    <strong class="clr-txt">$50.00 </strong> <del class="light-font">$65.00 </del>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><div class="owl-controls"><div class="owl-nav"><div class="owl-prev" style=""><i class="fa fa-long-arrow-left"></i></div><div class="owl-next" style=""><i class="fa fa-long-arrow-right"></i></div></div><div class="owl-dots" style="display: none;"></div></div>
+                    </div>
+                </div>
+
+
+                <div class="your-review">
+                    <h3 class="fsz-20 pb-15 text-center"><span class="light-font">Your item </span> <strong>review </strong>  </h3>
+                    <div class="divider-full-1"></div>
+                    <div class="your-review">
+                        <div class="block-inline your-rating">
+                            <div class="left">
+                                <div class="rating">
+                                    <span class="fsz-12 gray-color"> Your Rating :  </span>
+                                    <span class="star"></span>
+                                    <span class="star"></span>
+                                    <span class="star"></span>
+                                    <span class="star"></span>
+                                    <span class="star"></span>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <div class="rating">
+                                    <span class="star active"></span>
+                                    <span class="star active"></span>
+                                    <span class="star active"></span>
+                                    <span class="star active"></span>
+                                    <span class="star active"></span>
+                                    <span class="fsz-12 gray-color"> Overall Rating : 5/5  </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form class="review-form row">
+                            <div class="form-group col-sm-4">
+                                <input class="form-control" placeholder="Name" required="" type="text">
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <input class="form-control" placeholder="Email" required="" type="email">
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <input class="form-control" placeholder="Website" type="text">
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <textarea class="form-control" placeholder="Message" cols="12" rows="4"></textarea>
+                            </div>
+                            <div class="form-group col-sm-12 text-center ptb-15">
+                                <button class="theme-btn" type="submit"> <strong> SUBMIT REVIEW </strong> </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

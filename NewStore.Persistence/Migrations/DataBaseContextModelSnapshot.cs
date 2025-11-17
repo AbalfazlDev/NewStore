@@ -195,21 +195,21 @@ namespace NewStore.Persistence.Migrations
                         new
                         {
                             Id = 1L,
-                            InsertTime = new DateTime(2025, 11, 9, 19, 16, 16, 404, DateTimeKind.Local).AddTicks(2954),
+                            InsertTime = new DateTime(2025, 11, 13, 13, 45, 36, 449, DateTimeKind.Local).AddTicks(3762),
                             IsRemoved = false,
                             Name = "Admin"
                         },
                         new
                         {
                             Id = 2L,
-                            InsertTime = new DateTime(2025, 11, 9, 19, 16, 16, 405, DateTimeKind.Local).AddTicks(5323),
+                            InsertTime = new DateTime(2025, 11, 13, 13, 45, 36, 450, DateTimeKind.Local).AddTicks(5771),
                             IsRemoved = false,
                             Name = "Operator"
                         },
                         new
                         {
                             Id = 3L,
-                            InsertTime = new DateTime(2025, 11, 9, 19, 16, 16, 405, DateTimeKind.Local).AddTicks(5388),
+                            InsertTime = new DateTime(2025, 11, 13, 13, 45, 36, 450, DateTimeKind.Local).AddTicks(5837),
                             IsRemoved = false,
                             Name = "Customer"
                         });
@@ -222,8 +222,8 @@ namespace NewStore.Persistence.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("Age")
-                        .HasColumnType("int");
+                    b.Property<short?>("Age")
+                        .HasColumnType("smallint");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(450)");

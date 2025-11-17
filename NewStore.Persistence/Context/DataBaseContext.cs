@@ -29,7 +29,7 @@ namespace NewStore.Persistence.Context
         {
             configureExistingTables(modelBuilder);
             seedData(modelBuilder);
-            //applyQueryFilter(modelBuilder);
+            applyQueryFilter(modelBuilder);
 
             modelBuilder.Entity<User>().HasIndex(p => p.Email).IsUnique();
             modelBuilder.Entity<Category>(entity =>

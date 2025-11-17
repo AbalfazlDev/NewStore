@@ -15,7 +15,7 @@ namespace NewStore.Application.Services.Products.Queris.GetProductForAdmin
 {
     public interface IGetProductForAdminService
     {
-        ResultDto<ProductsForAdmin> Execute(UInt16 page, UInt16 pageSize);
+        ResultDto<ProductsForAdmin> Execute(UInt16 page, byte pageSize);
     }
 
 
@@ -27,11 +27,11 @@ namespace NewStore.Application.Services.Products.Queris.GetProductForAdmin
             _context = context;
         }
 
-        public ResultDto<ProductsForAdmin> Execute(UInt16 page, UInt16 pageSize)
+        public ResultDto<ProductsForAdmin> Execute(UInt16 page, byte pageSize)
         {
             try
             {
-                int rowsCount = 0;
+                uint rowsCount = 0;
                 List<ProductsForAdminList_Dto> product = _context.Products
                     .Include(p => p.Category)
                     .ToPage(page, pageSize, out rowsCount)

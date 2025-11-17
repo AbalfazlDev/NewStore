@@ -13,20 +13,20 @@ namespace EndPoint.Site.Areas.Admin.Controllers
     [Route("Admin/[Controller]/[Action]")]
     public class ProductsController : Controller
     {
-        private readonly IProductFacad _productFacad;
-        public ProductsController(IProductFacad productFacad)
+        private readonly IProductFacadForAdmin _productFacadAdmin;
+        public ProductsController(IProductFacadForAdmin productFacad)
         {
-            _productFacad = productFacad;
+            _productFacadAdmin = productFacad;
         }
-        public IActionResult Index(UInt16 page =1,UInt16 pageSize = 20)
+        public IActionResult Index(UInt16 page =1,byte pageSize = 20)
         {
-            return View(_productFacad.GetProductForAdmin.Execute(page,pageSize).Data);
+            return View(_productFacadAdmin.GetProductForAdmin.Execute(page,pageSize).Data);
         }
 
         [HttpGet]
         public IActionResult AddNewProduct()
         {
-            ViewBag.Categories = new SelectList(_productFacad.GetAllCategories.Execute().Data, "Id", "Name");
+            ViewBag.Categories = new SelectList(_productFacadAdmin.GetAllCategories.Execute().Data, "Id", "Name");
 
             return View();
         }
@@ -43,13 +43,14 @@ namespace EndPoint.Site.Areas.Admin.Controllers
             }
             request.Images = images;
             request.Features = features;
-            var result = _productFacad.AddNewProduct.Execute(request);
+            var result = _productFacadAdmin.AddNewProduct.Execute(request);
             return View();
         }
+
         [HttpGet]
         public IActionResult ProductDetails(long productId)
         {
-            var result = _productFacad.GetProductDetailsForAdmin.Execute(productId);
+            var result = _productFacadAdmin.GetProductDetailsForAdmin.Execute(productId);
             return View(result.Data);
         }
     }

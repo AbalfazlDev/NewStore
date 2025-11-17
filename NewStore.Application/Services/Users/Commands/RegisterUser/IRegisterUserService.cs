@@ -20,7 +20,7 @@ namespace NewStore.Application.Services.Users.Commands.RegisterUser
         public string Email { get; set; }
         public string Password { get; set; }
         public string RePassword { get; set; }
-        public Int16 Age { get; set; }
+        public short Age { get; set; }
         public List<RoleInRegisterUserDto> Roles { get; set; }
     }
 

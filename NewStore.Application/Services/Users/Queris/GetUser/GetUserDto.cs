@@ -1,4 +1,6 @@
-﻿namespace NewStore.Application.Services.Users.Queris.GetUser
+﻿using System;
+
+namespace NewStore.Application.Services.Users.Queris.GetUser
 {
     public class GetUserDto
     {
@@ -7,6 +9,6 @@
         public string Name { get; set; }
         public string? Lastname { get; set; }
         public string Email { get; set; }
-        public int? Age { get; set; }
+        public short? Age { get; set; }
     }
 }

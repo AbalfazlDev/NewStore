@@ -10,8 +10,8 @@ namespace EndPoint.Site.Areas.Admin.Controllers
     [Area("Admin")]
     public class CategoriesController : Controller
     {
-        private readonly IProductFacad _productFacad;
-        public CategoriesController(IProductFacad productFacad)
+        private readonly IProductFacadForAdmin _productFacad;
+        public CategoriesController(IProductFacadForAdmin productFacad)
         {
             _productFacad = productFacad;
         }

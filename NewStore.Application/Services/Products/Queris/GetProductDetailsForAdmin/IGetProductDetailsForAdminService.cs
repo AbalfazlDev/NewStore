@@ -35,7 +35,7 @@ namespace NewStore.Application.Services.Products.Queris.GetProductDetailsForAdmi
                     .Select(p => new ProductDetailsForAdminDto
                     {
                         Name = p.Name,
-                        Category = getCategory(p.Category),
+                        Category = getCategoryName(p.Category),
                         Brand = p.Brand,
                         Description = p.Description,
                         Price = p.Price,
@@ -72,7 +72,7 @@ namespace NewStore.Application.Services.Products.Queris.GetProductDetailsForAdmi
             }
         }
 
-        private string getCategory(Category category) => category != null ? category.ParentCategory.Name : "";
+        private string getCategoryName(Category category) => category != null ? category.ParentCategory.Name : "";
 
     }
 

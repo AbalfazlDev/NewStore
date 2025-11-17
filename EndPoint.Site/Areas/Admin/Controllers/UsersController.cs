@@ -36,7 +36,7 @@ namespace EndPoint.Site.Areas.Admin.Controllers
         }
         [HttpGet]
         [HttpPost]
-        public IActionResult Index(string searchKey, int page = 1)
+        public IActionResult Index(string searchKey, UInt16 page = 1)
         {
             var result = _userServise.Execute(new RequestGetUserDto { SearchKey = searchKey, Page = page }).Users;
             return View(result);
@@ -54,13 +54,13 @@ namespace EndPoint.Site.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(string name, string lastname, string email, int age, string password, string rePassword, int roleId)
+        public IActionResult Create(string name, string lastname, string email, short age, string password, string rePassword, ushort roleId)
         {
             RequestRegisterUserDto request = new RequestRegisterUserDto();
             request.Name = name;
             request.Lastname = lastname;
             request.Email = email;
-            request.Age = (Int16)age;
+            request.Age = age;
             request.Password = password;
             request.RePassword = rePassword;
             request.Roles = new List<RoleInRegisterUserDto>

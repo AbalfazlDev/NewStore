@@ -20,7 +20,7 @@ namespace NewStore.Application.Services.Users.Queris.GetUser
                 users = users.Where(p => p.Name.Contains(request.SearchKey) & p.Lastname.Contains(request.SearchKey) & p.Email.Contains(request.SearchKey));
             }
 
-            int rowsCount = 0;
+            uint rowsCount = 0;
             ResultGetUserDto result = new ResultGetUserDto();
             result.Users = users.ToPage(request.Page, 20, out rowsCount).Select(n => new GetUserDto
             {

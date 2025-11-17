@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NewStore.Application.Interfaces.Contexts;
 using NewStore.Application.Interfaces.FacadPatterns;
+using NewStore.Application.Services.Common.FacadPattern;
 using NewStore.Application.Services.Products.FacadPattern;
 using NewStore.Application.Services.Users.Commands.ChangeStatusUser;
 using NewStore.Application.Services.Users.Commands.EditUser;
@@ -60,8 +61,11 @@ namespace EndPoint.Site
             services.AddScoped<IChangeUserStatusService, ChangeUserStatusService>();
             services.AddScoped<IEditUserService, EditUserService>();
             services.AddScoped<ILoginUserService, LoginUserService>();
+            services.AddScoped<IProductFacad, ProductFacad>();
 
-            services.AddScoped<IProductFacad,ProductFacad>();
+            services.AddScoped<IProductFacadForAdmin,ProductFacadForAdmin>();
+
+            services.AddScoped<ICommonFacad, CommonFacad>();
 
         }
 
@@ -86,39 +90,38 @@ namespace EndPoint.Site
             app.UseAuthorization();
             app.UseAuthentication();
 
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    // ۱. روت برای Areas (اگر دارید)
+            //    endpoints.MapControllerRoute(
+            //        name: "areas",
+            //        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+            //    );
+
+            //    // ۲. روت پیش‌فرض — همه چیز را پوشش می‌دهد
+            //    endpoints.MapControllerRoute(
+            //        name: "default",
+            //        pattern: "{controller=Home}/{action=Index}/{id?}"
+            //    );
+            //});
             app.UseEndpoints(endpoints =>
             {
-                // ۱. روت برای Areas (اگر دارید)
-                endpoints.MapControllerRoute(
-                    name: "areas",
-                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-                );
-
-                // ۲. روت پیش‌فرض — همه چیز را پوشش می‌دهد
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}"
-                );
-            });
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapAreaControllerRoute(
-                    name: "AdminArea",
-                    areaName: "Admin",
-                    pattern: "admin/{controller=Users}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
                 endpoints.MapControllerRoute(
-                    name: "areas",
+                   name: "areas",
                     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
-                // اگر کسی به "/" برود، به /admin/users/create هدایتش کن
                 endpoints.MapGet("/", context =>
                 {
-                    context.Response.Redirect("/admin/products/index");
+                    context.Response.Redirect("/products/index");
                     return Task.CompletedTask;
                 });
             });
-
+            
 
         }
     }
