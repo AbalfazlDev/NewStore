@@ -1,0 +1,13 @@
+﻿@using NewStore.Application.Services.Common.Queris.GetCategories
+@model List<ResultGetCategories>
+@{
+    Layout = null;
+}
+
+<form method="get" asp-controller="Products" asp-action="Index">
+    <input name="searchKey" type="search" />
+    <select name="categoryId" asp-items="@(new SelectList(Model, "CategoryId", "Name"))">
+        <option value="null">همه موارد</option>
+    </select>
+    <button type="submit">جستجو</button>
+</form>

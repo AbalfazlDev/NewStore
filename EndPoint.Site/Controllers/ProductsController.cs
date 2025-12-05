@@ -11,9 +11,9 @@ namespace EndPoint.Site.Controllers
         {
             _productFacad = productFacad;
         }
-        public IActionResult Index(ushort page = 1, byte pageSize = 20,long? categoryId = null)
+        public IActionResult Index(string searchKey, ushort page = 1, byte pageSize = 20, long? categoryId = null)
         {
-            return View(_productFacad.GetProduct.Execute(page,pageSize,categoryId).Data);
+            return View(_productFacad.GetProduct.Execute(searchKey, page, pageSize, categoryId).Data);
         }
         [HttpGet]
         public IActionResult Details(long productId)
@@ -21,6 +21,6 @@ namespace EndPoint.Site.Controllers
             return View(_productFacad.GetProductDetails.Execute(productId).Data);
         }
 
-        
+
     }
 }

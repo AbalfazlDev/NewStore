@@ -53,6 +53,7 @@
 
                 <div class="col-lg-6 responsive-menu">
                     <div class="responsive-toggle fa fa-bars"> </div>
+                    @await Component.InvokeAsync("Search")
                     @await Component.InvokeAsync("GetMenu")
                 </div>
 

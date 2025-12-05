@@ -1,4 +1,5 @@
-﻿using NewStore.Application.Services.Common.Queris.GetMenuItems;
+﻿using NewStore.Application.Services.Common.Queris.GetCategories;
+using NewStore.Application.Services.Common.Queris.GetMenuItems;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace NewStore.Application.Interfaces.FacadPatterns
     public interface ICommonFacad
     {
         public IGetMenuItemsService  GetMenuItems { get; }
+        public IGetCategoriesService GetCategories { get; }
     }
 }

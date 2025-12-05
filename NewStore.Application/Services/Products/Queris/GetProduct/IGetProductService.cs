@@ -13,7 +13,7 @@ namespace NewStore.Application.Services.Products.Queris.GetProduct
 {
     public interface IGetProductService
     {
-        public ResultDto<ResultGetProductDto> Execute(UInt16 page, byte pageSize,long? categoryId);
+        public ResultDto<ResultGetProductDto> Execute(string searchKey, UInt16 page, byte pageSize, long? categoryId);
     }
     public class GetProductService : IGetProductService
     {
@@ -22,13 +22,19 @@ namespace NewStore.Application.Services.Products.Queris.GetProduct
         {
             _context = context;
         }
-        public ResultDto<ResultGetProductDto> Execute(UInt16 page, byte pageSize, long? categoryId = null)
+        public ResultDto<ResultGetProductDto> Execute(string searchKey, UInt16 page, byte pageSize, long? categoryId = null)
         {
             uint rowsCount;
-            var products = _context.Products
-                .Include(p => p.ProductImages)
-                .Where(p => p.CategoryId == categoryId)
-                .ToPage(page, pageSize, out rowsCount);
+            var productQuery = _context.Products
+                .Include(p => p.ProductImages).AsQueryable();
+
+            if (categoryId != null)
+                productQuery = productQuery.Where(p => p.CategoryId == categoryId || p.Category.ParentCategoryId == categoryId);
+
+            if (!string.IsNullOrWhiteSpace(searchKey))
+                productQuery = productQuery.Where(p => p.Name.Contains(searchKey) || p.Brand.Contains(searchKey));
+
+            var products = productQuery.ToPage(page, pageSize, out rowsCount);
 
             Random random = new Random();
             return new ResultDto<ResultGetProductDto>()
@@ -62,7 +68,7 @@ namespace NewStore.Application.Services.Products.Queris.GetProduct
     {
         public long Id { get; set; }
         public string Title { get; set; }
-        public string Brand {  get; set; }
+        public string Brand { get; set; }
         public string ImageSrc { get; set; }
         public byte Star { get; set; }
         public int Price { get; set; }

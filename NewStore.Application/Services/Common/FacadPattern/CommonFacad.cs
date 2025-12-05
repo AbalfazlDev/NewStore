@@ -1,5 +1,6 @@
 ﻿using NewStore.Application.Interfaces.Contexts;
 using NewStore.Application.Interfaces.FacadPatterns;
+using NewStore.Application.Services.Common.Queris.GetCategories;
 using NewStore.Application.Services.Common.Queris.GetMenuItems;
 
 namespace NewStore.Application.Services.Common.FacadPattern
@@ -11,6 +12,7 @@ namespace NewStore.Application.Services.Common.FacadPattern
         {
             _context = context;
         }
+
         private IGetMenuItemsService _getMenuItems;
         public IGetMenuItemsService GetMenuItems
         {
@@ -19,5 +21,16 @@ namespace NewStore.Application.Services.Common.FacadPattern
                 return _getMenuItems = _getMenuItems ?? new GetMenuItemsService(_context);
             }
         }
+
+        private IGetCategoriesService _getCategories;
+
+        public IGetCategoriesService GetCategories
+        {
+            get
+            {
+                return _getCategories = _getCategories ?? new GetCategoriesService(_context);
+            }
+        }
+
     }
 }
