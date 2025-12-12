@@ -5,6 +5,6 @@ namespace EndPoint.Site.Models
 {
     public class HomePageVM
     {
-        public List<GetPageImagesResult> PageImages { get; set; }
+        public List<PageImages> PageImages { get; set; }
     }
 }

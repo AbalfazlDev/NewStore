@@ -10,7 +10,7 @@ namespace NewStore.Application.Services.HomePage.Queries.GetPageImages
 {
     public interface IGetPageImagesService
     {
-        public ResultDto<List<GetPageImagesResult>> Execute();
+        public ResultDto<List<PageImages>> Execute();
     }
 
     public class GetPageImagesService : IGetPageImagesService
@@ -22,16 +22,17 @@ namespace NewStore.Application.Services.HomePage.Queries.GetPageImages
             _context = context;
         }
 
-        public ResultDto<List<GetPageImagesResult>> Execute()
+        public ResultDto<List<PageImages>> Execute()
         {
-            List<GetPageImagesResult> PageImages =_context.PageImages.Select(p =>new GetPageImagesResult
+            List<PageImages> PageImages =_context.PageImages.Select(p =>new PageImages
             {
                 Src = p.Src,
                 CategoryId = p.CategoryId,
                 Position = p.Position,
+                Name = p.Name,
             }).ToList();
 
-            return new ResultDto<List<GetPageImagesResult>>
+            return new ResultDto<List<PageImages>>
             {
                 IsSuccess = true,
                 Data = PageImages
@@ -39,10 +40,5 @@ namespace NewStore.Application.Services.HomePage.Queries.GetPageImages
         }
     }
 
-    public class GetPageImagesResult
-    {
-        public PositionInPage Position { get; set; }
-        public string Src { get; set; }
-        public long CategoryId { get; set; }
-    }
+    
 }

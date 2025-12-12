@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NewStore.Application.Interfaces.FacadPatterns;
+using NewStore.Application.Services.Common.Queris.GetCategories;
 using NewStore.Application.Services.Products.Commands.AddNewProduct;
 using NewStore.Application.Services.Products.Queris.GetAllCategoris;
 using NewStore.Application.Tools;
@@ -14,12 +15,12 @@ namespace EndPoint.Site.Areas.Admin.Controllers
     public class HomePageController : Controller
     {
         IHomePageFacad _homePageFacad;
-        IProductFacadForAdmin _productFacadForAdmin;
+        ICommonFacad _commonFacad;
         Microsoft.AspNetCore.Hosting.IHostingEnvironment _environment;
-        public HomePageController(IHomePageFacad homePageFacad, IProductFacadForAdmin productFacadForAdmin, Microsoft.AspNetCore.Hosting.IHostingEnvironment environment)
+        public HomePageController(IHomePageFacad homePageFacad, ICommonFacad commonFacad, Microsoft.AspNetCore.Hosting.IHostingEnvironment environment)
         {
             _homePageFacad = homePageFacad;
-            _productFacadForAdmin = productFacadForAdmin;
+            _commonFacad = commonFacad;
             _environment = environment;
         }
         public IActionResult Index()
@@ -34,8 +35,8 @@ namespace EndPoint.Site.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult AddPageImage()
         {
-            List<ResultGetAllCategories> categories = _productFacadForAdmin.GetAllCategories.Execute().Data;
-            ViewBag.Categories = new SelectList(categories, "Id", "Name");
+            List<ResultGetCategories> categories = _commonFacad.GetCategories.Execute().Data;
+            ViewBag.Categories = new SelectList(categories, "CategoryId", "Name");
             return View();
         }
 

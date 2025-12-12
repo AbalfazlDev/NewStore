@@ -1,2 +1,11 @@
 Admin / HomePage/ AddPageImage:
 when click to add PageImage and save it, not whow error or ... because redirect to "/" whithout check errors
+
+app.js in register and login commented becauser error that privious not extend
+
+
+
+
+
+
+

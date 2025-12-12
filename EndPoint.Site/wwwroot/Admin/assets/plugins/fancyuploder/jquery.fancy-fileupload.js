@@ -1,7 +1,8 @@
 // jQuery plugin to display a custom jQuery File Uploader interface.
 // (C) 2017 CubicleSoft.  All Rights Reserved.
 
-(function($) {
+(function ($) {
+	var filePath = "";
 	var EscapeHTML = function (text) {
 		var map = {
 			'&': '&amp;',
@@ -403,7 +404,7 @@
 
 				return;
 			}
-
+			console.log(data.result);
 			activeuploads--;
 			data.ff_info.uploading = false;
 

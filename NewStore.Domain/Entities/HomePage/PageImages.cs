@@ -16,6 +16,6 @@ namespace NewStore.Domain.Entities.HomePage
     {
         MainPageSlider = 0,
         PopularCategory = 1,
-        NewProduct = 2
+        Banner = 2
     }
 }
