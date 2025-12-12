@@ -30,7 +30,7 @@ namespace NewStore.Application.Services.Products.Queris.GetAllCategoris
                 .Select(p => new ResultGetAllCategories()
                 {
                     Id = p.Id,
-                    Name = p.Name + "-" + p.ParentCategory.Name,
+                    Name = p.Name + "/" + p.ParentCategory.Name,
                 }).ToList();
 
             return new ResultDto<List<ResultGetAllCategories>>()

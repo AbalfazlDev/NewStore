@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NewStore.Application.Interfaces.FacadPatterns;
+using NewStore.Application.Services.Products.Queris.GetProduct;
 using System;
 
 namespace EndPoint.Site.Controllers
@@ -11,9 +12,9 @@ namespace EndPoint.Site.Controllers
         {
             _productFacad = productFacad;
         }
-        public IActionResult Index(string searchKey, ushort page = 1, byte pageSize = 20, long? categoryId = null)
+        public IActionResult Index(Ordering ordering = Ordering.MostVisited, string searchKey = "", ushort page = 1, byte pageSize = 20, long? categoryId = null)
         {
-            return View(_productFacad.GetProduct.Execute(searchKey, page, pageSize, categoryId).Data);
+            return View(_productFacad.GetProduct.Execute(ordering, searchKey, page, pageSize, categoryId).Data);
         }
         [HttpGet]
         public IActionResult Details(long productId)

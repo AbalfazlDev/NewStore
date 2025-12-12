@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using NewStore.Application.Interfaces.Contexts;
 using NewStore.Application.Interfaces.FacadPatterns;
 using NewStore.Application.Services.Common.FacadPattern;
+using NewStore.Application.Services.HomePage.FacadPattren;
 using NewStore.Application.Services.Products.FacadPattern;
 using NewStore.Application.Services.Users.Commands.ChangeStatusUser;
 using NewStore.Application.Services.Users.Commands.EditUser;
@@ -58,6 +59,7 @@ builder.Services.AddScoped<ILoginUserService, LoginUserService>();
 builder.Services.AddScoped<IProductFacad, ProductFacad>();
 builder.Services.AddScoped<IProductFacadForAdmin, ProductFacadForAdmin>();
 builder.Services.AddScoped<ICommonFacad, CommonFacad>();
+builder.Services.AddScoped<IHomePageFacad, HomePageFacad>();
 
 // -------------------------
 // Build Application
@@ -96,11 +98,11 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}"
 );
 
-// Redirect root → /products/index
-app.MapGet("/", context =>
-{
-    context.Response.Redirect("/products/index");
-    return Task.CompletedTask;
-});
+//Redirect root → /products/index
+//app.MapGet("/", context =>
+//{
+//    context.Response.Redirect("/admin/HomePage/AddPageImage");
+//return Task.CompletedTask;
+//});
 
 app.Run();

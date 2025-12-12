@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NewStore.Persistence.Context;
 
@@ -11,9 +12,11 @@ using NewStore.Persistence.Context;
 namespace NewStore.Persistence.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20251206121853_add_viewCount_Star_To_Product")]
+    partial class add_viewCount_Star_To_Product
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,43 +24,6 @@ namespace NewStore.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("NewStore.Domain.Entities.HomePage.PageImages", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("CategoryId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("InsertTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsRemoved")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Position")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("RemoveTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Src")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdateTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PageImages");
-                });
 
             modelBuilder.Entity("NewStore.Domain.Entities.Product.Category", b =>
                 {
@@ -246,21 +212,21 @@ namespace NewStore.Persistence.Migrations
                         new
                         {
                             Id = 1L,
-                            InsertTime = new DateTime(2025, 12, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            InsertTime = new DateTime(2025, 12, 6, 15, 48, 50, 28, DateTimeKind.Local).AddTicks(1884),
                             IsRemoved = false,
                             Name = "Admin"
                         },
                         new
                         {
                             Id = 2L,
-                            InsertTime = new DateTime(2025, 12, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            InsertTime = new DateTime(2025, 12, 6, 15, 48, 50, 29, DateTimeKind.Local).AddTicks(3000),
                             IsRemoved = false,
                             Name = "Operator"
                         },
                         new
                         {
                             Id = 3L,
-                            InsertTime = new DateTime(2025, 12, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            InsertTime = new DateTime(2025, 12, 6, 15, 48, 50, 29, DateTimeKind.Local).AddTicks(3069),
                             IsRemoved = false,
                             Name = "Customer"
                         });

@@ -5,15 +5,15 @@ namespace EndPoint.Site.ViewComponents
 {
     public class Search : ViewComponent
     {
-        private readonly ICommonFacad _commonFacad;
+        //private readonly ICommonFacad _commonFacad;
         public Search(ICommonFacad commonFacad)
         {
-            _commonFacad = commonFacad;
+            //_commonFacad = commonFacad;
         }
 
         public IViewComponentResult Invoke()
         {
-            return View(viewName: "Search", _commonFacad.GetCategories.Execute().Data);
+            return View(viewName: "Search"/*, _commonFacad.GetCategories.Execute().Data*/);
         }
     }
 }

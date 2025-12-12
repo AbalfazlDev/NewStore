@@ -1,13 +1,89 @@
-﻿@using NewStore.Application.Services.Common.Queris.GetCategories
-@model List<ResultGetCategories>
+﻿@* @using NewStore.Application.Services.Common.Queris.GetCategories
+@model List<ResultGetCategories> *@
 @{
     Layout = null;
 }
-
-<form method="get" asp-controller="Products" asp-action="Index">
+<!-- Search Box -->
+<form method="post" asp-controller="Products" asp-action="index" class="relative z-20">
+    <!-- INPUT -->
+    <div onclick="" class="search-btn-open flex gap-x-2 app-border bg-gray-50 dark:bg-gray-700 p-1 rounded-full cursor-pointer ring-blue-400 w-84 transition-all">
+        <svg class="size-6 p-1.5 flex-center text-gray-100 bg-blue-600 rounded-full w-9 h-9">
+            <use href="#search"></use>
+        </svg>
+        <input autocomplete="off" name="searchKey" placeholder="جستجو در فروشگاه دیجیتال..." type="text">
+    </div>
+    <!-- Search Modal -->
+    <div class="search-modal space-y-4">
+        <!-- Result -->
+        <div>
+            <span class="flex items-center text-sm gap-x-1 text-gray-600 dark:text-gray-200">
+                <p>نتیجه جستجو : <span class="font-DanaMedium text-blue-400">iphone</span></p>
+            </span>
+            <ul class="pt-4 text-gray-500 dark:text-gray-300 flex flex-col gap-y-4 child:flex-between child:cursor-pointer">
+                <li>
+                    <a href="#" class="flex items-center gap-x-2">
+                        <svg class="size-5">
+                            <use href="#search"></use>
+                        </svg>
+                        آیفون 14
+                    </a>
+                    <svg class="size-4">
+                        <use href="#arrow-up-right"></use>
+                    </svg>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center gap-x-2">
+                        <svg class="size-5">
+                            <use href="#search"></use>
+                        </svg>
+                        قاب آیفون
+                    </a>
+                    <svg class="size-4">
+                        <use href="#arrow-up-right"></use>
+                    </svg>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center gap-x-2">
+                        <svg class="size-5">
+                            <use href="#search"></use>
+                        </svg>
+                        کاور ایفون 16
+                    </a>
+                    <svg class="size-4">
+                        <use href="#arrow-up-right"></use>
+                    </svg>
+                </li>
+            </ul>
+        </div>
+        <!-- Trend -->
+        <div class="pt-4">
+            <span class="flex items-center gap-x-1 text-sm text-gray-500 dark:text-gray-200">
+                <svg class="size-4">
+                    <use href="#fire"></use>
+                </svg>
+                <p>جستجو های پرطرفدار :</p>
+            </span>
+            <ul class="w-full flex items-center gap-1.5 mt-3 child:search-modal-list-item">
+                <li>
+                    <a href="#">#آیفون</a>
+                </li>
+                <li>
+                    <a href="#">#لپ تاپ</a>
+                </li>
+                <li>
+                    <a href="#">#هدفون</a>
+                </li>
+                <li>
+                    <a href="#">#هلدر</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</form>
+@* <form method="get" asp-controller="Products" asp-action="Index">
     <input name="searchKey" type="search" />
     <select name="categoryId" asp-items="@(new SelectList(Model, "CategoryId", "Name"))">
         <option value="null">همه موارد</option>
     </select>
     <button type="submit">جستجو</button>
-</form>
+</form> *@

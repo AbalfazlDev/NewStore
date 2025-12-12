@@ -24,13 +24,13 @@ namespace EndPoint.Site.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult Login(string url="/")
+        public IActionResult Login(string url = "/")
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Login(string email, string password ,string url="/")
+        public IActionResult Login(string email, string password, string url = "/")
         {
             ResultLoginUserDto loginResult = _loginUserService.Execute(email, password);
             if (loginResult.IsSuccess)
@@ -55,8 +55,15 @@ namespace EndPoint.Site.Controllers
             return Json(loginResult);
         }
 
+        [HttpGet]
+        public IActionResult Register(string email = "")
+        {
+            ViewBag.Email = email;
+            return View();
+        }
+
         [HttpPost]
-        public IActionResult Register(string name, string lastname, string email, string password, string   confirmPassword)
+        public IActionResult Register(string name, string lastname, string email, string password, string confirmPassword)
         {
             RequestRegisterUserDto request = new RequestRegisterUserDto()
             {
@@ -97,12 +104,12 @@ namespace EndPoint.Site.Controllers
             }
             return Json(registerResult);
         }
-    
+
         public IActionResult SignOut()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home");
         }
-    
+
     }
 }

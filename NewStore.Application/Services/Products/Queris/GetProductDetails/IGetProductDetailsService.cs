@@ -30,7 +30,8 @@ namespace NewStore.Application.Services.Products.Queris.GetProductDetails
             if (product == null)
                 throw new Exception("Product Not Found ...");
 
-
+            product.ViewCount++;
+            _context.SaveChanges();
             return new ResultDto<ResultGetProductDetails>
             {
                 IsSuccess = true,
@@ -41,7 +42,9 @@ namespace NewStore.Application.Services.Products.Queris.GetProductDetails
                     Brand = product.Brand,
                     Description = product.Description,
                     Price = product.Price,
-                    Category = $"{product.Category.Name}-{product.Category.ParentCategory.Name}",
+                    Star = product.Star,
+                    ViewCount = product.ViewCount,
+                    Category = $"{product.Category.Name} / {product.Category.ParentCategory.Name}",
                     ImagesSrc = product.ProductImages.Select(c => c.Src).ToList(),
                     ProductFeatures = product.ProductFeatures.Select(c => new ProductFeaturesDto
                     {
@@ -60,6 +63,8 @@ namespace NewStore.Application.Services.Products.Queris.GetProductDetails
             public string Description { get; set; }
             public int Price { get; set; }
             public string Category { get; set; }
+            public int Star { get; set; }
+            public int ViewCount { get; set; }
 
             public List<string> ImagesSrc { get; set; }
             public List<ProductFeaturesDto> ProductFeatures { get; set; }

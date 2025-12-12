@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NewStore.Domain.Entities.HomePage;
 using NewStore.Domain.Entities.Product;
 using NewStore.Domain.Entities.Users;
 using System;
@@ -19,6 +20,7 @@ namespace NewStore.Application.Interfaces.Contexts
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImages> ProductImages { get; set; }
         public DbSet<ProductFeatures> ProductFeatures { get; set; }
+        public DbSet<PageImages> PageImages { get; set; }
 
         int SaveChanges(bool acceptAllChangesOnSuccess);
         int SaveChanges();
