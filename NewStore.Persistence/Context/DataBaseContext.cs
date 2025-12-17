@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NewStore.Application.Interfaces.Contexts;
 using NewStore.Common.Roles;
+using NewStore.Domain.Entities.Carts;
 using NewStore.Domain.Entities.HomePage;
 using NewStore.Domain.Entities.Product;
 using NewStore.Domain.Entities.Users;
@@ -26,6 +27,7 @@ namespace NewStore.Persistence.Context
         public DbSet<ProductImages> ProductImages { get; set; }
         public DbSet<ProductFeatures> ProductFeatures { get; set; }
         public DbSet<PageImages> PageImages { get; set; }
+        public DbSet<Cart> Cart { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -60,6 +62,7 @@ namespace NewStore.Persistence.Context
             modelBuilder.Entity<Category>().HasQueryFilter(p => !p.IsRemoved);
             modelBuilder.Entity<Product>().HasQueryFilter(p => !p.IsRemoved);
             modelBuilder.Entity<PageImages>().HasQueryFilter(p => !p.IsRemoved);
+            modelBuilder.Entity<Cart>().HasQueryFilter(p => !p.IsRemoved);
 
         }
 

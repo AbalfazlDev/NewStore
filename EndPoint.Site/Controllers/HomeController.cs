@@ -23,7 +23,7 @@ namespace EndPoint.Site.Controllers
         }
 
         public IActionResult Index()
-        {
+        {          
             HomePageVM homePageVM = new HomePageVM();
             homePageVM.PageImages = _homePageFacad.GetImages.Execute().Data;
             return View(homePageVM);
@@ -33,7 +33,6 @@ namespace EndPoint.Site.Controllers
         {
             return View();
         }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

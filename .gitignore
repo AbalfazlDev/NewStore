@@ -363,4 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # Ignore wwwroot (generated static files)
-wwwroot/
+wwwroot\Customer\images

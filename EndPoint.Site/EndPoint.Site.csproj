@@ -6,16 +6,17 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UserSecretsId>94c187fa-4db5-424a-aeec-57bb15c26ffa</UserSecretsId>
 		<NoWarn>NU1903</NoWarn>
+		<NoWarn>NU1900</NoWarn>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="LazZiya.TagHelpers" Version="6.0.2" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0">
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.1">
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.0" />
-		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.0-rc.1.25458.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.1" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
