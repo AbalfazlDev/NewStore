@@ -15,7 +15,7 @@ namespace NewStore.Domain.Entities.Carts
         public Guid BrowserId { get; set; }
     }
 
-    public class Item : BaseEntity
+    public class CartItem : BaseEntity
     {
         public virtual NewStore.Domain.Entities.Product.Product Proudct { get; set; }
         public long ProductId { get; set; }

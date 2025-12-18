@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using NewStore.Application.Interfaces.FacadPatterns;
 using NewStore.Application.Services.Users.Commands.LoginUser;
 using NewStore.Application.Services.Users.Commands.RegisterUser;
 using NewStore.Common.Dto;
@@ -11,13 +12,10 @@ namespace EndPoint.Site.Controllers
 {
     public class AuthenticationController : Controller
     {
-        private readonly ILoginUserService _loginUserService;
-        private readonly IRegisterUserService _registerUserService;
-
-        public AuthenticationController(ILoginUserService loginUserService, IRegisterUserService registerUserService)
+        private readonly IUserFacad _userFacad;
+        public AuthenticationController(IUserFacad userFacad)
         {
-            _loginUserService = loginUserService;
-            _registerUserService = registerUserService;
+            _userFacad = userFacad;
         }
         public IActionResult Index()
         {
@@ -32,7 +30,7 @@ namespace EndPoint.Site.Controllers
         [HttpPost]
         public IActionResult Login(string email, string password, string url = "/")
         {
-            ResultLoginUserDto loginResult = _loginUserService.Execute(email, password);
+            ResultLoginUserDto loginResult = _userFacad.Login.Execute(email, password);
             if (loginResult.IsSuccess)
             {
                 var claims = new List<Claim>()
@@ -81,7 +79,7 @@ namespace EndPoint.Site.Controllers
                 }
 
             };
-            ResultDto<ResultRegisterUserDto> registerResult = _registerUserService.Execute(request);
+            ResultDto<ResultRegisterUserDto> registerResult = _userFacad.Register.Execute(request);
             if (registerResult.IsSuccess == true)
             {
                 var claims = new List<Claim>()
