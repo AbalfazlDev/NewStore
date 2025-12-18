@@ -13,7 +13,7 @@ namespace NewStore.Application.Services.Carts
     {
         ResultDto RemoveFromCart(long productId, Guid browserId);
         ResultDto AddToCart(long productId, Guid browserId);
-        ResultDto GetCart(Guid browserId);
+        ResultDto<GetCartDto> GetCart(Guid browserId);
     }
 
     public class CartService : ICartService
@@ -63,7 +63,7 @@ namespace NewStore.Application.Services.Carts
 
         }
 
-        public ResultDto<CartDto> GetCart(Guid browserId)
+        public ResultDto<GetCartDto> GetCart(Guid browserId)
         {
             Cart cart = _context.Carts
                 .Include(p => p.CartItems)
@@ -71,10 +71,10 @@ namespace NewStore.Application.Services.Carts
                 .Where(p => p.BrowserId == browserId && p.IsFinished == false)
                 .FirstOrDefault();
 
-            return new ResultDto<CartDto>
+            return new ResultDto<GetCartDto>
             {
                 IsSuccess = true,
-                Data = new CartDto
+                Data = new GetCartDto
                 {
                     CartItems = cart.CartItems.Select(p => new CartItemDto
                     {
@@ -111,7 +111,7 @@ namespace NewStore.Application.Services.Carts
 
     }
 
-    public class CartDto
+    public class GetCartDto
     {
         public List<CartItemDto> CartItems { get; set; }
     }
