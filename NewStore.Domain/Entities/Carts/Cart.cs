@@ -12,11 +12,17 @@ namespace NewStore.Domain.Entities.Carts
         public User User { get; set; }
         public long? UserId { get; set; }
 
+        public ICollection<CartItem> CartItems { get; set; }
+        public bool IsFinished { get; set; }
+
         public Guid BrowserId { get; set; }
     }
 
     public class CartItem : BaseEntity
     {
+        public virtual Cart Cart { get; set; }
+        public long  CartId { get; set; }
+
         public virtual NewStore.Domain.Entities.Product.Product Proudct { get; set; }
         public long ProductId { get; set; }
 
