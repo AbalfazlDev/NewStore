@@ -11,9 +11,11 @@ namespace NewStore.Application.Services.Carts
 {
     public interface ICartService
     {
-        ResultDto RemoveFromCart(long productId, Guid browserId);
-        ResultDto AddToCart(long productId, Guid browserId);
-        ResultDto<GetCartDto> GetCart(Guid browserId);
+        public ResultDto RemoveFromCart(long cartItemId, Guid browserId);
+        public ResultDto AddToCart(long productId, Guid browserId);
+        public ResultDto<GetCartDto> GetCart(Guid browserId);
+        public ResultDto IncrementItemFromCart(long productId, Guid browserId);
+        public ResultDto DecreaseItemFromCart(long productId, Guid browserId);
     }
 
     public class CartService : ICartService
@@ -23,6 +25,7 @@ namespace NewStore.Application.Services.Carts
         {
             _context = context;
         }
+
         public ResultDto AddToCart(long productId, Guid browserId)
         {
             Cart cart = _context.Carts.Where(c => c.BrowserId == browserId && c.IsFinished == false).FirstOrDefault();
@@ -52,7 +55,8 @@ namespace NewStore.Application.Services.Carts
                 };
                 _context.CartItems.Add(cartItem);
             }
-            cartItem.Count++;
+            else
+                cartItem.Count++;
             _context.SaveChanges();
 
             return new ResultDto
@@ -67,30 +71,37 @@ namespace NewStore.Application.Services.Carts
         {
             Cart cart = _context.Carts
                 .Include(p => p.CartItems)
+                .ThenInclude(p => p.Proudct)
+                .ThenInclude(p => p.ProductImages)
                 .OrderByDescending(p => p.Id)
                 .Where(p => p.BrowserId == browserId && p.IsFinished == false)
                 .FirstOrDefault();
+
 
             return new ResultDto<GetCartDto>
             {
                 IsSuccess = true,
                 Data = new GetCartDto
                 {
+
+                    TotalPrice = cart.CartItems.Sum(p => p.Price),
                     CartItems = cart.CartItems.Select(p => new CartItemDto
                     {
+                        CartItemId = p.Id,
                         ProductName = p.Proudct.Name,
+                        ProductScr = p.Proudct.ProductImages.FirstOrDefault().Src,
                         Price = p.Price,
                         Count = p.Count
                     }).ToList(),
-                }
+                },
+                Message = cart.CartItems.Count() > 0 ? "" : "سبدخرید خالی است"
             };
-
         }
 
-        public ResultDto RemoveFromCart(long productId, Guid browserId)
+        public ResultDto RemoveFromCart(long cartItemId, Guid browserId)
         {
             // this way to delete items(product in cart) is false :(
-            CartItem cartItem = _context.CartItems.Where(p => p.Cart.BrowserId == browserId).FirstOrDefault();
+            CartItem cartItem = _context.CartItems.Where(p => p.Cart.BrowserId == browserId && p.Id == cartItemId).FirstOrDefault();
             if (cartItem != null)
             {
                 cartItem.IsRemoved = true;
@@ -109,15 +120,67 @@ namespace NewStore.Application.Services.Carts
             };
         }
 
+        public ResultDto IncrementItemFromCart(long cartItemId, Guid browserId)
+        {
+            Cart cart = _context.Carts.Include(p => p.CartItems).Where(p => p.BrowserId == browserId && p.IsFinished == false).FirstOrDefault();
+            if (cart == null)
+                return new ResultDto
+                {
+                    IsSuccess = false,
+                    Message = "سبد خرید یافت نشد"
+                };
+            CartItem item = cart.CartItems?.Where(p => p.Id == cartItemId)?.FirstOrDefault();
+            if (item == null)
+                return new ResultDto
+                {
+                    IsSuccess = false,
+                    Message = "محصول مورد نظر یافت نشد"
+                };
+            item.Count++;
+            _context.SaveChanges();
+            return new ResultDto
+            {
+                IsSuccess = true
+            };
+        }
+
+        public ResultDto DecreaseItemFromCart(long cartItemId, Guid browserId)
+        {
+            Cart cart = _context.Carts.Include(p => p.CartItems).Where(p => p.BrowserId == browserId && p.IsFinished == false).FirstOrDefault();
+            if (cart == null)
+                return new ResultDto
+                {
+                    IsSuccess = false,
+                    Message = "سبد خرید یافت نشد"
+                };
+            CartItem item = cart.CartItems?.Where(p => p.Id == cartItemId)?.FirstOrDefault();
+            if (item == null)
+                return new ResultDto
+                {
+                    IsSuccess = false,
+                    Message = "محصول مورد نظر یافت نشد"
+                };
+            item.Count--;
+            if (item.Count > 0)
+                _context.SaveChanges();
+            return new ResultDto
+            {
+                IsSuccess = true
+            };
+        }
+
     }
 
     public class GetCartDto
     {
         public List<CartItemDto> CartItems { get; set; }
+        public int TotalPrice { get; set; }
     }
     public class CartItemDto
     {
+        public long CartItemId { get; set; }
         public string ProductName { get; set; }
+        public string ProductScr { get; set; }
         public int Price { get; set; }
         public int Count { get; set; }
     }

@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NewStore.Application.Interfaces.Contexts;
 using NewStore.Application.Interfaces.FacadPatterns;
+using NewStore.Application.Services.Carts;
 using NewStore.Application.Services.Common.FacadPattern;
 using NewStore.Application.Services.HomePage.FacadPattren;
 using NewStore.Application.Services.Products.FacadPattern;
@@ -13,6 +14,7 @@ using NewStore.Application.Services.Users.Commands.EditUser;
 using NewStore.Application.Services.Users.Commands.LoginUser;
 using NewStore.Application.Services.Users.Commands.RegisterUser;
 using NewStore.Application.Services.Users.Commands.RemoveUser;
+using NewStore.Application.Services.Users.FacadPattern;
 using NewStore.Application.Services.Users.Queris.GetRole;
 using NewStore.Application.Services.Users.Queris.GetUser;
 using NewStore.Persistence.Context;
@@ -49,17 +51,12 @@ builder.Services.AddDbContext<DataBaseContext>(options =>
 builder.Services.AddScoped<IDataBaseContext, DataBaseContext>();
 
 // DI Services
-builder.Services.AddScoped<IGetUserServise, GetUserService>();
-builder.Services.AddScoped<IGetRolesService, GetRolesService>();
-builder.Services.AddScoped<IRegisterUserService, RegisterUserService>();
-builder.Services.AddScoped<IRemoveUserService, RemoveUserService>();
-builder.Services.AddScoped<IChangeUserStatusService, ChangeUserStatusService>();
-builder.Services.AddScoped<IEditUserService, EditUserService>();
-builder.Services.AddScoped<ILoginUserService, LoginUserService>();
+builder.Services.AddScoped<IUserFacad, UserFacad>();
 builder.Services.AddScoped<IProductFacad, ProductFacad>();
 builder.Services.AddScoped<IProductFacadForAdmin, ProductFacadForAdmin>();
 builder.Services.AddScoped<ICommonFacad, CommonFacad>();
 builder.Services.AddScoped<IHomePageFacad, HomePageFacad>();
+builder.Services.AddScoped<ICartService, CartService>();
 
 // -------------------------
 // Build Application

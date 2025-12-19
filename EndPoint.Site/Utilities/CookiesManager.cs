@@ -25,7 +25,21 @@ namespace EndPoint.Site.Utilities
             return null;
         }
 
-        public void Remove(HttpContext context, string token)
+        public Guid GetBrowserId(HttpContext context)
+        {
+            string browserId = GetValue(context, "BrowserId");
+            if (browserId == null)
+            {
+                Guid guid = Guid.NewGuid();
+                Add(context, "BrowserId", guid.ToString());
+                return guid;
+            }
+            Guid browserGuid;
+            Guid.TryParse(browserId,out browserGuid);
+            return browserGuid;
+        }
+
+        public void Remove( HttpContext context, string token)
         {
             if (context.Request.Cookies.ContainsKey(token))
                 context.Response.Cookies.Delete(token);

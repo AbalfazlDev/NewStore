@@ -64,6 +64,7 @@ namespace NewStore.Persistence.Context
             modelBuilder.Entity<Product>().HasQueryFilter(p => !p.IsRemoved);
             modelBuilder.Entity<PageImages>().HasQueryFilter(p => !p.IsRemoved);
             modelBuilder.Entity<Cart>().HasQueryFilter(p => !p.IsRemoved);
+            modelBuilder.Entity<CartItem>().HasQueryFilter(p => !p.IsRemoved);
 
         }
 

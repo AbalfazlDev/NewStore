@@ -38,6 +38,7 @@ namespace NewStore.Application.Services.Products.Queris.GetProductDetails
                 Message = "",
                 Data = new ResultGetProductDetails
                 {
+                    ProductId = productId,
                     title = product.Name,
                     Brand = product.Brand,
                     Description = product.Description,
@@ -58,6 +59,7 @@ namespace NewStore.Application.Services.Products.Queris.GetProductDetails
 
         public class ResultGetProductDetails
         {
+            public long ProductId { get; set; }
             public string title { get; set; }
             public string Brand { get; set; }
             public string Description { get; set; }
