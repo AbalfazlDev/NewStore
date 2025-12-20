@@ -15,7 +15,8 @@ namespace NewStore.Application.Services.Carts
         public ResultDto AddToCart(long productId, Guid browserId);
         public ResultDto<GetCartDto> GetCart(Guid browserId);
         public ResultDto IncrementItemFromCart(long productId, Guid browserId);
-        public ResultDto DecreaseItemFromCart(long productId, Guid browserId);
+        public ResultDto DecrementItemFromCart(long productId, Guid browserId);
+        public ResultDto UpdateCountCartItem(long cartItemId, Guid browserId, int newCount);
     }
 
     public class CartService : ICartService
@@ -89,7 +90,7 @@ namespace NewStore.Application.Services.Carts
                     {
                         CartItemId = p.Id,
                         ProductName = p.Proudct.Name,
-                        ProductScr = p.Proudct.ProductImages.FirstOrDefault().Src,
+                        ProductSrc = p.Proudct.ProductImages.FirstOrDefault().Src,
                         Price = p.Price,
                         Count = p.Count
                     }).ToList(),
@@ -144,7 +145,7 @@ namespace NewStore.Application.Services.Carts
             };
         }
 
-        public ResultDto DecreaseItemFromCart(long cartItemId, Guid browserId)
+        public ResultDto DecrementItemFromCart(long cartItemId, Guid browserId)
         {
             Cart cart = _context.Carts.Include(p => p.CartItems).Where(p => p.BrowserId == browserId && p.IsFinished == false).FirstOrDefault();
             if (cart == null)
@@ -169,6 +170,49 @@ namespace NewStore.Application.Services.Carts
             };
         }
 
+        public ResultDto UpdateCountCartItem(long cartItemId, Guid browserId, int newCount)
+        {
+            Cart cart;
+            CartItem cartItem;
+            ResultDto result = identifyCartItem(cartItemId, browserId, out cart, out cartItem);
+            if (result.IsSuccess)
+            {
+                cartItem.Count = newCount;
+                _context.SaveChanges();
+                return new ResultDto
+                {
+                    IsSuccess = true,
+                };
+            }
+            return result;
+        }
+
+        private ResultDto identifyCartItem(long cartItemId, Guid browserId, out Cart cart, out CartItem cartItem)
+        {
+            cart = _context.Carts.Include(p=>p.CartItems).Where(p => p.BrowserId == browserId && p.IsFinished == false).FirstOrDefault();
+            if (cart == null)
+            {
+                cartItem = null;
+                return new ResultDto
+                {
+                    IsSuccess = false,
+                    Message = "سبدخرید یافت نشد"
+                };
+            }
+
+            cartItem = cart.CartItems.Where(p => p.CartId == cartItemId).FirstOrDefault();
+            if (cartItem == null)
+                return new ResultDto
+                {
+                    IsSuccess = false,
+                    Message = "کالا مورد نظر یافت نشد"
+                };
+
+            return new ResultDto
+            {
+                IsSuccess = true,
+            };
+        }
     }
 
     public class GetCartDto
@@ -180,7 +224,7 @@ namespace NewStore.Application.Services.Carts
     {
         public long CartItemId { get; set; }
         public string ProductName { get; set; }
-        public string ProductScr { get; set; }
+        public string ProductSrc { get; set; }
         public int Price { get; set; }
         public int Count { get; set; }
     }

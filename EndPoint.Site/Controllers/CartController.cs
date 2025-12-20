@@ -1,4 +1,5 @@
-﻿using EndPoint.Site.Utilities;
+﻿using EndPoint.Site.Models;
+using EndPoint.Site.Utilities;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using NewStore.Application.Services.Carts;
@@ -37,7 +38,7 @@ namespace EndPoint.Site.Controllers
 
         public IActionResult DecrementItem(long cartItemId)
         {
-            _cartService.DecreaseItemFromCart(cartItemId, _cookiesManager.GetBrowserId(HttpContext));
+            _cartService.DecrementItemFromCart(cartItemId, _cookiesManager.GetBrowserId(HttpContext));
             return RedirectToAction("Index");
         }
 
@@ -45,6 +46,16 @@ namespace EndPoint.Site.Controllers
         {
             _cartService.RemoveFromCart(cartItemId, _cookiesManager.GetBrowserId(HttpContext));
             return RedirectToAction("Index");
+        }
+
+        // this action called in view componet cart
+        [HttpPost]
+        public IActionResult DirectToCart([FromBody] List<CountCartItemDto> cartItems)
+        {
+            Guid browserId = _cookiesManager.GetBrowserId(HttpContext);
+            foreach (CountCartItemDto cartItem in cartItems)
+                _cartService.UpdateCountCartItem(cartItem.CartItemId, browserId, cartItem.Count);
+            return Json(new { redirectUrl = Url.Action("Index", "Cart") });
         }
     }
 }

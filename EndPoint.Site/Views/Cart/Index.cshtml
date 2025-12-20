@@ -52,7 +52,7 @@
                         <div class="flex flex-col sm:flex-row items-center gap-6">
                             <!-- IMG AND COUNT BTN -->
                             <div class="flex w-fit flex-col">
-                                <img src="~/@Model.CartItems.First().ProductScr" class="w-36" alt="">
+                                <img src="~/@Model.CartItems.First().ProductSrc" class="w-36" alt="">
                                 <button class="flex items-center justify-between gap-x-1 rounded-lg border border-gray-200 dark:border-white/20 py-1 px-2">
                                     <svg onclick="incrementItem(@Model.CartItems.First().CartItemId)" class="w-4 h-4 increment text-green-600">
                                         <use href="#plus"></use>
@@ -124,7 +124,7 @@
                         <div class="flex flex-col sm:flex-row items-center gap-6">
                             <!-- IMG AND COUNT BTN -->
                             <div class="flex w-fit flex-col">
-                                <img src="~/@item.ProductScr" class="w-36 mb-5" alt="">
+                                <img src="~/@item.ProductSrc" class="w-36 mb-5" alt="">
                                 <button class="flex items-center justify-between gap-x-1 rounded-lg border border-gray-200 dark:border-white/20 py-1 px-2">
                                     <svg onclick="incrementItem(@item.CartItemId)" class="w-4 h-4 increment text-green-600">
                                         <use href="#plus"></use>
