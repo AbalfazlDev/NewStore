@@ -13,6 +13,7 @@ namespace NewStore.Application.Services.Carts
     public interface ICartService
     {
         public ResultDto<GetCartDto> GetCart(Guid browserId, long? userId);
+        public ResultDto RemoveCart( Guid browserId);
         public ResultDto RemoveFromCart(long cartItemId, Guid browserId);
         public ResultDto AddToCart(long productId, Guid browserId, long? userId);
         public ResultDto IncrementItemFromCart(long productId, Guid browserId);
@@ -27,6 +28,25 @@ namespace NewStore.Application.Services.Carts
         {
             _context = context;
         }
+
+
+        public ResultDto RemoveCart( Guid browserId)
+        {
+            Cart cart;
+            ResultDto result = identifyCart(browserId, out cart);
+
+            if (!result.IsSuccess)
+                return result;
+            cart.IsRemoved = true;
+            cart.RemoveTime = DateTime.Now;
+            _context.SaveChanges();
+
+            return new ResultDto
+            {
+                IsSuccess = true,
+            };
+        }
+
 
         public ResultDto<GetCartDto> GetCart(Guid browserId, long? userId)
         {
@@ -61,6 +81,7 @@ namespace NewStore.Application.Services.Carts
                 IsSuccess = true,
                 Data = new GetCartDto
                 {
+                    CartId = cart.Id,
                     CartItemsCount = cart.CartItems.Count(),
                     TotalPrice = cart.CartItems.Sum(p => p.Price),
                     CartItems = cart.CartItems.Select(p => new CartItemDto
@@ -180,6 +201,7 @@ namespace NewStore.Application.Services.Carts
             };
         }
 
+
         public ResultDto UpdateCountCartItem(long cartItemId, Guid browserId, int newCount)
         {
             Cart cart;
@@ -197,17 +219,34 @@ namespace NewStore.Application.Services.Carts
             return result;
         }
 
-        private ResultDto identifyCartItem(long cartItemId, Guid browserId, out Cart cart, out CartItem cartItem)
+
+        private ResultDto identifyCart(Guid browserId, out Cart cart)
         {
             cart = _context.Carts.Include(p => p.CartItems).Where(p => p.BrowserId == browserId && p.IsFinished == false).FirstOrDefault();
             if (cart == null)
-            {
-                cartItem = null;
+
                 return new ResultDto
                 {
                     IsSuccess = false,
                     Message = "سبدخرید یافت نشد"
                 };
+
+            return new ResultDto
+            {
+                IsSuccess = true
+            };
+
+        }
+
+
+        private ResultDto identifyCartItem(long cartItemId, Guid browserId, out Cart cart, out CartItem cartItem)
+        {
+
+            ResultDto result = identifyCart(browserId, out cart);
+            if (!result.IsSuccess)
+            {
+                cartItem = null;
+                return result;
             }
 
             cartItem = cart.CartItems.Where(p => p.Id == cartItemId).FirstOrDefault();
@@ -227,6 +266,7 @@ namespace NewStore.Application.Services.Carts
 
     public class GetCartDto
     {
+        public long CartId { get; set; }
         public List<CartItemDto> CartItems { get; set; }
         public int CartItemsCount { get; set; }
         public int TotalPrice { get; set; }

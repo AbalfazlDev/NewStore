@@ -21,7 +21,7 @@ namespace EndPoint.Site.Controllers
         public IActionResult Index()
         {
             long? userId = ClaimUtilities.GetUserId(User);
-            ResultDto<GetCartDto> result = _cartService.GetCart(_cookiesManager.GetBrowserId(HttpContext),userId);
+            ResultDto<GetCartDto> result = _cartService.GetCart(_cookiesManager.GetBrowserId(HttpContext), userId);
             return View(result.Data);
         }
 
@@ -47,6 +47,12 @@ namespace EndPoint.Site.Controllers
         public IActionResult remove(long cartItemId)
         {
             _cartService.RemoveFromCart(cartItemId, _cookiesManager.GetBrowserId(HttpContext));
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult RemoveAllItem()
+        {
+            _cartService.RemoveCart(_cookiesManager.GetBrowserId(HttpContext));
             return RedirectToAction("Index");
         }
 
