@@ -20,13 +20,15 @@ namespace EndPoint.Site.Controllers
         }
         public IActionResult Index()
         {
-            ResultDto<GetCartDto> result = _cartService.GetCart(_cookiesManager.GetBrowserId(HttpContext));
+            long? userId = ClaimUtilities.GetUserId(User);
+            ResultDto<GetCartDto> result = _cartService.GetCart(_cookiesManager.GetBrowserId(HttpContext),userId);
             return View(result.Data);
         }
 
         public IActionResult AddToCart(long productId)
         {
-            _cartService.AddToCart(productId, _cookiesManager.GetBrowserId(HttpContext));
+            long? userId = ClaimUtilities.GetUserId(User);
+            _cartService.AddToCart(productId, _cookiesManager.GetBrowserId(HttpContext), userId);
             return RedirectToAction("Index");
         }
 

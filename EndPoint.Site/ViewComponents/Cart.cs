@@ -1,10 +1,7 @@
-﻿using EndPoint.Site.Models;
-using EndPoint.Site.Utilities;
-using Microsoft.AspNetCore.Http.HttpResults;
+﻿using EndPoint.Site.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using NewStore.Application.Services.Carts;
 using NewStore.Common.Dto;
-using NewStore.Domain.Entities.Carts;
 
 namespace EndPoint.Site.ViewComponents
 {
@@ -20,7 +17,8 @@ namespace EndPoint.Site.ViewComponents
         [HttpGet]
         public IViewComponentResult Invoke()
         {
-            ResultDto<GetCartDto> result = _cartService.GetCart(_cookiesManager.GetBrowserId(HttpContext));
+            long? userId = ClaimUtilities.GetUserId(HttpContext.User);
+            ResultDto<GetCartDto> result = _cartService.GetCart(_cookiesManager.GetBrowserId(HttpContext), userId);
             return View(viewName: "Cart", result.Data);
         }
     }
