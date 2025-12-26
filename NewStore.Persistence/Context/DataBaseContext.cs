@@ -2,7 +2,9 @@
 using NewStore.Application.Interfaces.Contexts;
 using NewStore.Common.Roles;
 using NewStore.Domain.Entities.Carts;
+using NewStore.Domain.Entities.Finances;
 using NewStore.Domain.Entities.HomePage;
+using NewStore.Domain.Entities.Order;
 using NewStore.Domain.Entities.Product;
 using NewStore.Domain.Entities.Users;
 using System;
@@ -29,6 +31,9 @@ namespace NewStore.Persistence.Context
         public DbSet<PageImages> PageImages { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<RequestPay> RequestPays { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetails> OrderDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

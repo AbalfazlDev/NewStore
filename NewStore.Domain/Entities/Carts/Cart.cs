@@ -27,6 +27,6 @@ namespace NewStore.Domain.Entities.Carts
         public long ProductId { get; set; }
 
         public int Count { get; set; }
-        public int Price { get; set; }
+        //public int Price { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NewStore.Persistence.Context;
 
@@ -11,9 +12,11 @@ using NewStore.Persistence.Context;
 namespace NewStore.Persistence.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20251225085606_Add_PayRequest")]
+    partial class Add_PayRequest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,7 +58,7 @@ namespace NewStore.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Carts", (string)null);
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("NewStore.Domain.Entities.Carts.CartItem", b =>
@@ -96,7 +99,7 @@ namespace NewStore.Persistence.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CartItems", (string)null);
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("NewStore.Domain.Entities.Finances.RequestPay", b =>
@@ -144,7 +147,7 @@ namespace NewStore.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("RequestPays", (string)null);
+                    b.ToTable("RequestPays");
                 });
 
             modelBuilder.Entity("NewStore.Domain.Entities.HomePage.PageImages", b =>
@@ -181,7 +184,7 @@ namespace NewStore.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PageImages", (string)null);
+                    b.ToTable("PageImages");
                 });
 
             modelBuilder.Entity("NewStore.Domain.Entities.Product.Category", b =>
@@ -214,7 +217,7 @@ namespace NewStore.Persistence.Migrations
 
                     b.HasIndex("ParentCategoryId");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("NewStore.Domain.Entities.Product.Product", b =>
@@ -268,7 +271,7 @@ namespace NewStore.Persistence.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("NewStore.Domain.Entities.Product.ProductFeatures", b =>
@@ -304,7 +307,7 @@ namespace NewStore.Persistence.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductFeatures", (string)null);
+                    b.ToTable("ProductFeatures");
                 });
 
             modelBuilder.Entity("NewStore.Domain.Entities.Product.ProductImages", b =>
@@ -337,7 +340,7 @@ namespace NewStore.Persistence.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImages", (string)null);
+                    b.ToTable("ProductImages");
                 });
 
             modelBuilder.Entity("NewStore.Domain.Entities.Users.Role", b =>

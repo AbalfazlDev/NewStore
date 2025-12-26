@@ -13,7 +13,7 @@ namespace NewStore.Application.Services.Carts
     public interface ICartService
     {
         public ResultDto<GetCartDto> GetCart(Guid browserId, long? userId);
-        public ResultDto RemoveCart( Guid browserId);
+        public ResultDto RemoveCart(Guid browserId);
         public ResultDto RemoveFromCart(long cartItemId, Guid browserId);
         public ResultDto AddToCart(long productId, Guid browserId, long? userId);
         public ResultDto IncrementItemFromCart(long productId, Guid browserId);
@@ -30,7 +30,7 @@ namespace NewStore.Application.Services.Carts
         }
 
 
-        public ResultDto RemoveCart( Guid browserId)
+        public ResultDto RemoveCart(Guid browserId)
         {
             Cart cart;
             ResultDto result = identifyCart(browserId, out cart);
@@ -75,6 +75,8 @@ namespace NewStore.Application.Services.Carts
                 }
 
             }
+            
+
 
             return new ResultDto<GetCartDto>
             {
@@ -83,13 +85,13 @@ namespace NewStore.Application.Services.Carts
                 {
                     CartId = cart.Id,
                     CartItemsCount = cart.CartItems.Count(),
-                    TotalPrice = cart.CartItems.Sum(p => p.Price),
+                    TotalPrice = cart.CartItems.Sum(p => p.Proudct.Price),
                     CartItems = cart.CartItems.Select(p => new CartItemDto
                     {
                         CartItemId = p.Id,
                         ProductName = p.Proudct.Name,
                         ProductSrc = p.Proudct.ProductImages.FirstOrDefault().Src,
-                        Price = p.Price,
+                        Price = p.Proudct.Price,
                         Count = p.Count
                     }).ToList(),
                 },
@@ -130,7 +132,7 @@ namespace NewStore.Application.Services.Carts
                 {
                     Cart = cart,
                     Proudct = product,
-                    Price = product.Price,
+                    //Price = product.Price,
                     Count = 1
                 };
                 _context.CartItems.Add(cartItem);

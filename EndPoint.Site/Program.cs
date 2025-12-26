@@ -7,7 +7,9 @@ using NewStore.Application.Interfaces.Contexts;
 using NewStore.Application.Interfaces.FacadPatterns;
 using NewStore.Application.Services.Carts;
 using NewStore.Application.Services.Common.FacadPattern;
+using NewStore.Application.Services.Finances.FacadPattern;
 using NewStore.Application.Services.HomePage.FacadPattren;
+using NewStore.Application.Services.Orders.FacadPattern;
 using NewStore.Application.Services.Products.FacadPattern;
 using NewStore.Application.Services.Users.Commands.ChangeStatusUser;
 using NewStore.Application.Services.Users.Commands.EditUser;
@@ -17,6 +19,7 @@ using NewStore.Application.Services.Users.Commands.RemoveUser;
 using NewStore.Application.Services.Users.FacadPattern;
 using NewStore.Application.Services.Users.Queris.GetRole;
 using NewStore.Application.Services.Users.Queris.GetUser;
+using NewStore.Common.Roles;
 using NewStore.Persistence.Context;
 using System;
 using System.Threading.Tasks;
@@ -26,6 +29,12 @@ var builder = WebApplication.CreateBuilder(args);
 // -------------------------
 // Add Services
 // -------------------------
+builder.Services.AddAuthorization(option =>
+{
+    option.AddPolicy(UserRoles.Admin, policy => policy.RequireRole(UserRoles.Admin));
+    option.AddPolicy(UserRoles.Customer, policy => policy.RequireRole(UserRoles.Customer));
+    option.AddPolicy(UserRoles.Operator, policy => policy.RequireRole(UserRoles.Operator));
+});
 
 builder.Services.AddAuthentication(options =>
 {
@@ -35,14 +44,16 @@ builder.Services.AddAuthentication(options =>
 })
 .AddCookie(options =>
 {
-    options.LoginPath = "/";
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+    options.LoginPath = "/Authentication/Login";
+    options.ExpireTimeSpan = TimeSpan.FromDays(20);
 });
 
 string connectionString = "Data Source=ABALFAZLPC\\MYSQL; Initial Catalog=StoreDb; Integrated Security=True; TrustServerCertificate=True;";
 
 
+
 builder.Services.AddControllersWithViews();
+
 
 // EF Core
 builder.Services.AddDbContext<DataBaseContext>(options =>
@@ -57,6 +68,8 @@ builder.Services.AddScoped<IProductFacadForAdmin, ProductFacadForAdmin>();
 builder.Services.AddScoped<ICommonFacad, CommonFacad>();
 builder.Services.AddScoped<IHomePageFacad, HomePageFacad>();
 builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<IFinancesFacad, FinancesFacad>();
+builder.Services.AddScoped<IOrderFacad,OrderFacad>();
 
 // -------------------------
 // Build Application
@@ -96,10 +109,10 @@ app.MapControllerRoute(
 );
 
 //Redirect root → /products/index
-//app.MapGet("/", context =>
-//{
-//    context.Response.Redirect("/admin/HomePage/AddPageImage");
-//return Task.CompletedTask;
-//});
+app.MapGet("/", context =>
+{
+    context.Response.Redirect("/cart/index");
+return Task.CompletedTask;
+});
 
 app.Run();

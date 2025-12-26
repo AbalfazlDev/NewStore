@@ -124,7 +124,7 @@
             <ul class="child:flex child:items-center child:justify-between space-y-8">
                 <li>
                     <p>قیمت کالاها</p>
-                    <p class="flex gap-x-1 text-gray-600 dark:text-gray-300 ">@Model.TotalPrice.ToString("0n") <span class="hidden xl:flex">تومان</span></p>
+                    <p class="flex gap-x-1 text-gray-600 dark:text-gray-300 ">@Model.TotalPrice.ToString("n0") <span class="hidden xl:flex">تومان</span></p>
                 </li>
                 <li>
                     <p>تخفیف </p>
@@ -136,7 +136,7 @@
                 </li>
             </ul>
 
-            <a href="checkout.html" class="w-full mt-4 flex items-center gap-x-1 justify-center bg-blue-500 text-white hover:bg-blue-600 transition-all rounded-lg shadow py-2">
+            <a href="/Pay/index" class="w-full mt-4 flex items-center gap-x-1 justify-center bg-blue-500 text-white hover:bg-blue-600 transition-all rounded-lg shadow py-2">
                 تایید و تکمیل سفارش
                 <svg class="w-5 h-5">
                     <use href="#shopping-bag"></use>
