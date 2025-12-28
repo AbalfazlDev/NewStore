@@ -2,6 +2,7 @@
 using NewStore.Application.Interfaces.FacadPatterns;
 using NewStore.Application.Services.Orders.Commands.AddNewOrder;
 using NewStore.Application.Services.Orders.Queries.GerOrders;
+using NewStore.Application.Services.Orders.Queries.GetOrdersForAdmin;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -31,6 +32,16 @@ namespace NewStore.Application.Services.Orders.FacadPattern
                 return _getOrders = _getOrders ?? new GetOrdersService(_context);
             }
         }
+
+        private IGetOrdersForAdminService _getOrdersAdmin;
+        public IGetOrdersForAdminService GetOrdersAdmin
+        {
+            get
+            {
+                return _getOrdersAdmin= _getOrdersAdmin ?? new GetOrdersForAdminService(_context);
+            }
+        }
+
 
     }
 }

@@ -2,7 +2,7 @@ $(function () {
     //fancyfileuplod
     $('#demo').FancyFileUpload({
         params: {
-            action: 'addPageImage'
+            action: 'fileuploader'
         },
         maxfilesize: 1000000
     });

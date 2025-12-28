@@ -18,6 +18,7 @@
 
     <!-- BOOTSTRAP CSS -->
     <link id="style" href="~/admin/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link id="style" href="~/admin/assets/plugins/bootstrap/css/bootstrap.rtl.min.css" rel="stylesheet">
 
     <!-- STYLE CSS -->
     <link href="~/admin/assets/css/style.css" rel="stylesheet">
@@ -446,6 +447,20 @@
                                         </li>
                                         <li>
                                             <a asp-controller="Products" asp-action="AddNewProduct" class="slide-item"> افزودن محصول جدید</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="slide is-expanded">
+                                    <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)"><i class="side-menu__icon fe fe-slack"></i><span class="side-menu__label">بخش سفارشات</span><i class="angle fe fe-chevron-right"></i></a>
+                                    <ul class="slide-menu" style="display: none;">
+                                        <li>
+                                            <a asp-controller="Orders" asp-action="Index" class="slide-item">پردازش شده</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Orders" asp-action="index" class="slide-item">لغو شده</a>
+                                        </li>
+                                        <li>
+                                            <a asp-controller="Orders" asp-action="Index" class="slide-item">تحویل  داده شده</a>
                                         </li>
                                     </ul>
                                 </li>

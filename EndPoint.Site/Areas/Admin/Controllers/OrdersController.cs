@@ -1,12 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NewStore.Application.Interfaces.FacadPatterns;
+using NewStore.Application.Services.Orders.Queries.GetOrdersForAdmin;
+using NewStore.Domain.Entities.Order;
 
 namespace EndPoint.Site.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class OrdersController : Controller
     {
-        public IActionResult Index()
+        private readonly IOrderFacad _orderFacad;
+        public OrdersController(IOrderFacad orderFacad)
         {
-            return View();
+            _orderFacad = orderFacad;
+        }
+        public IActionResult Index(OrderState orderState,ushort page)
+        {
+            List<GetOrderForAdminDto> orders = _orderFacad.GetOrdersAdmin.Execute(orderState, page).Data;
+            return View(orders);
         }
     }
 }
