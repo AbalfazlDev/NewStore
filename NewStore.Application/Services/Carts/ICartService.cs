@@ -58,16 +58,10 @@ namespace NewStore.Application.Services.Carts
                 .Where(p => p.BrowserId == browserId && p.IsFinished == false)
                 .FirstOrDefault();
 
-            if (cart == null)
-                return new ResultDto<GetCartDto>
-                {
-                    IsSuccess = false,
-                    Message = "سبدخرید یافت نشد",
-                };
-
-            if (userId != null)
+            User user = new User();
+            if (userId != null && cart != null)
             {
-                User user = _context.Users.Find(userId);
+                user = _context.Users.Find(userId);
                 if (user != null)
                 {
                     cart.User = user;
@@ -75,8 +69,27 @@ namespace NewStore.Application.Services.Carts
                 }
 
             }
-            
 
+            if (cart == null)
+            {
+                cart = new Cart()
+                {
+                    BrowserId = browserId,
+                    User = user
+                };
+                _context.Carts.Add(cart);
+                _context.SaveChanges();
+                return new ResultDto<GetCartDto>
+                {
+                    IsSuccess = true,
+                    Data = new GetCartDto
+                    {
+                        CartId = cart.Id,
+                        CartItemsCount = 0,
+                        TotalPrice = 0,
+                    }
+                };
+            }
 
             return new ResultDto<GetCartDto>
             {
@@ -85,7 +98,7 @@ namespace NewStore.Application.Services.Carts
                 {
                     CartId = cart.Id,
                     CartItemsCount = cart.CartItems.Count(),
-                    TotalPrice = cart.CartItems.Sum(p => p.Proudct.Price),
+                    TotalPrice = cart.CartItems.Sum(p => p.Proudct.Price * p.Count),
                     CartItems = cart.CartItems.Select(p => new CartItemDto
                     {
                         CartItemId = p.Id,

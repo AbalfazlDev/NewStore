@@ -8,7 +8,7 @@ namespace NewStore.Application.Services.Finances.Commands.AddRequest
 {
     public interface IAddRequestPayService
     {
-        public ResultDto<ResultRequestPay> Execute(int amount, long userID);
+        public ResultDto<ResultRequestPay> Execute(int amount, long userID,long cartId);
     }
     public class AddRequestPayService : IAddRequestPayService
     {
@@ -17,7 +17,7 @@ namespace NewStore.Application.Services.Finances.Commands.AddRequest
         {
             _context = context;
         }
-        public ResultDto<ResultRequestPay> Execute(int amount, long userID)
+        public ResultDto<ResultRequestPay> Execute(int amount, long userID,long cartId)
         {
             User user = _context.Users.Find(userID);
             RequestPay requestPay = new RequestPay()
@@ -26,7 +26,7 @@ namespace NewStore.Application.Services.Finances.Commands.AddRequest
                 User = user,
                 Amount = amount,
                 IsPay = false,
-
+                CartId = cartId
             };
             _context.RequestPays.Add(requestPay);
             _context.SaveChanges();

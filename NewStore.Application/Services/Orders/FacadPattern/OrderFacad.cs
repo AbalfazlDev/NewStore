@@ -1,6 +1,7 @@
 ﻿using NewStore.Application.Interfaces.Contexts;
 using NewStore.Application.Interfaces.FacadPatterns;
 using NewStore.Application.Services.Orders.Commands.AddNewOrder;
+using NewStore.Application.Services.Orders.Queries.GerOrders;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -15,10 +16,21 @@ namespace NewStore.Application.Services.Orders.FacadPattern
         {
             _context = context;
         }
+
         private IAddNewOrderService _addNewOrder;
         public IAddNewOrderService AddNewOrder
         {
             get { return _addNewOrder = _addNewOrder ?? new AddNewOrderService(_context); }
         }
+
+        private IGetOrdersService _getOrders;
+        public IGetOrdersService GetOrders
+        {
+            get
+            {
+                return _getOrders = _getOrders ?? new GetOrdersService(_context);
+            }
+        }
+
     }
 }

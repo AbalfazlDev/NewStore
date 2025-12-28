@@ -14,7 +14,13 @@ namespace NewStore.Application.Services.Orders.Commands.AddNewOrder
 {
     public interface IAddNewOrderService
     {
-        public ResultDto Execute(Guid requestPayGuid, long cartId,long refId);
+        public ResultDto Execute( RequestAddNewOrder  request);
+    }
+    public class RequestAddNewOrder
+    {
+        public long RequestPayId { get; set; }
+        public long CartId { get; set; }
+        public long RefId { get; set; }
     }
     public class AddNewOrderService : IAddNewOrderService
     {
@@ -23,21 +29,21 @@ namespace NewStore.Application.Services.Orders.Commands.AddNewOrder
         {
             _context = context;
         }
-        public ResultDto Execute(Guid requestPayGuid, long cartId, long refId)
+        public ResultDto Execute(RequestAddNewOrder request)
         {
-            RequestPay requestPay = _context.RequestPays.Include(p => p.User).Where(p => p.Guid == requestPayGuid).FirstOrDefault();
+            RequestPay requestPay = _context.RequestPays.Include(p => p.User).Where(p => p.Id == request.RequestPayId).FirstOrDefault();
             if (requestPay == null)
                 return new ResultDto
                 {
                     IsSuccess = false,
                     Message = "فاکتور پرداخت یافت نشد"
                 };
-            requestPay.RefId = refId;
+            requestPay.RefId = request.RefId;
             requestPay.IsPay = true;
             requestPay.PayDate = DateTime.Now;
             _context.SaveChanges();
 
-            Cart cart = _context.Carts.Where(p => p.Id == cartId && !p.IsFinished).FirstOrDefault();
+            Cart cart = _context.Carts.Include(p=>p.CartItems).ThenInclude(p=>p.Proudct).Where(p => p.Id == request.CartId && !p.IsFinished).FirstOrDefault();
             if (cart == null)
                 return new ResultDto
                 {

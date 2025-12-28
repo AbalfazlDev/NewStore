@@ -1,6 +1,7 @@
 ﻿using NewStore.Application.Interfaces.Contexts;
 using NewStore.Application.Interfaces.FacadPatterns;
 using NewStore.Application.Services.Finances.Commands.AddRequest;
+using NewStore.Application.Services.Finances.Commands.SetRequestAuthority;
 using NewStore.Application.Services.Finances.Queries.GetRequestPay;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,15 @@ namespace NewStore.Application.Services.Finances.FacadPattern
             get
             {
                 return _getRequestPay = _getRequestPay ?? new GetRequestPayService(_context);
+            }
+        }
+
+        private ISetRequestAuthorityService _setRequestAuthority;
+        public ISetRequestAuthorityService SetRequestAuthority
+        {
+            get
+            {
+                return _setRequestAuthority = _setRequestAuthority?? new SetRequestAuthorityService(_context);
             }
         }
     }

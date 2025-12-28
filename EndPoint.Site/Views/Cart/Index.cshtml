@@ -37,7 +37,14 @@
                     <p class="text-gray-400">(@Model.CartItemsCount کالا)</p>
                 </span>
                 <span class="flex items-center gap-x-1 text-red-600 dark:text-white cursor-pointer">
-                    <p class="mt-1 font-DanaMedium ">حذف سبدخرید</p>
+                    @if (Model.CartItemsCount > 0)
+                    {
+                        <p class="mt-1 font-DanaMedium ">حذف سبد خرید</p>
+                    }
+                    else
+                    {
+                        <p class="mt-1 font-DanaMedium "></p>
+                    }
                     <svg class="w-5 h-5">
                         <use href="~/Cart/RemoveAllItem"></use>
                     </svg>
@@ -45,105 +52,109 @@
             </div>
             <!-- PRODUCT ITEMS -->
             <div class="w-full flex flex-col gap-y-4 child:p-2 lg:child:p-4 ">
-
-                @foreach (var item in Model.CartItems)
+                @if (Model.CartItemsCount > 0)
                 {
-                    <!-- PRODUCT ITEM -->
-                    <div class="w-full flex justify-between relative border-b-2 border-gray-200 dark:border-white/20 ">
-                        <div class="flex flex-col sm:flex-row items-center gap-6">
-                            <!-- IMG AND COUNT BTN -->
-                            <div class="flex w-fit flex-col">
-                                <img src="~/@item.ProductSrc" class="w-36" alt="">
-                                <button class="flex items-center justify-between gap-x-1 rounded-lg border border-gray-200 dark:border-white/20 py-1 px-2">
-                                    <svg onclick="incrementItem(@item.CartItemId)" class="w-4 h-4 increment text-green-600">
-                                        <use  href="#plus"></use>
+                    @foreach (var item in Model.CartItems)
+                    {
+                        <!-- PRODUCT ITEM -->
+                        <div class="w-full flex justify-between relative border-b-2 border-gray-200 dark:border-white/20 ">
+                            <div class="flex flex-col sm:flex-row items-center gap-6">
+                                <!-- IMG AND COUNT BTN -->
+                                <div class="flex w-fit flex-col">
+                                    <img src="~/@item.ProductSrc" class="w-36" alt="">
+                                    <button class="flex items-center justify-between gap-x-1 rounded-lg border border-gray-200 dark:border-white/20 py-1 px-2">
+                                        <svg onclick="incrementItem(@item.CartItemId)" class="w-4 h-4 increment text-green-600">
+                                            <use href="#plus"></use>
+                                        </svg>
+                                        <input type="number" name="customInput" id="customInput" min="1" max="99" value="@item.Count" class="custom-input mr-8 text-lg bg-transparent">
+                                        <svg onclick="decrementItem(@item.CartItemId)" class="w-4 h-4 decrement text-red-500">
+                                            <use href="#minus"></use>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <!-- information and name product -->
+                                <div class="flex flex-col gap-y-4">
+                                    <h2 class="font-DanaMedium line-clamp-1">@item.ProductName</h2>
+                                    <ul class="space-y-3 child:text-sm text-gray-400 child:flex child:items-center child:gap-x-1.5">
+                                        <li>
+                                            <span class="size-5 bg-blue-500 rounded-full"></span>
+                                            <p>آبی</p>
+                                        </li>
+                                        <li>
+                                            <svg class="w-5 h-5">
+                                                <use href="#shield"></use>
+                                            </svg>
+                                            <p class="mt-1">گارانتی 18 ماهه</p>
+                                        </li>
+                                        <li>
+                                            <svg class="w-5 h-5">
+                                                <use href="#truck"></use>
+                                            </svg>
+                                            <p class="mt-1">ارسال 1 روز کاری</p>
+                                        </li>
+                                    </ul>
+                                    <span class="flex items-center gap-x-1 text-gray-700 dark:text-gray-300 font-DanaMedium mt-4">
+                                        <p class="font-DanaMedium text-xl">@item.Price.ToString("n0")</p>
+                                        <p class="text-lg">تومان</p>
+                                    </span>
+                                    <span onclick="removeItem(@item.CartItemId)" class="absolute bottom-3 left-0 text-blue-500 flex sm:hidden items-center gap-x-1 text-sm cursor-pointer">
+                                        <p class="hidden sm:flex">حذف کالا</p>
+                                        <p class="flex sm:hidden">حذف</p>
+                                        <svg class="w-4 h-4">
+                                            <use href="#chevron-left"></use>
+                                        </svg>
+                                    </span>
+                                    <svg class=" flex sm:hidden absolute top-0 left-0 w-5 h-5">
+                                        <use href="#close"></use>
                                     </svg>
-                                    <input type="number" name="customInput" id="customInput" min="1" max="99" value="@item.Count" class="custom-input mr-8 text-lg bg-transparent">
-                                    <svg onclick="decrementItem(@item.CartItemId)" class="w-4 h-4 decrement text-red-500">
-                                        <use href="#minus"></use>
-                                    </svg>
-                                </button>
+                                </div>
                             </div>
-                            <!-- information and name product -->
-                            <div class="flex flex-col gap-y-4">
-                                <h2 class="font-DanaMedium line-clamp-1">@item.ProductName</h2>
-                                <ul class="space-y-3 child:text-sm text-gray-400 child:flex child:items-center child:gap-x-1.5">
-                                    <li>
-                                        <span class="size-5 bg-blue-500 rounded-full"></span>
-                                        <p>آبی</p>
-                                    </li>
-                                    <li>
-                                        <svg class="w-5 h-5">
-                                            <use href="#shield"></use>
-                                        </svg>
-                                        <p class="mt-1">گارانتی 18 ماهه</p>
-                                    </li>
-                                    <li>
-                                        <svg class="w-5 h-5">
-                                            <use href="#truck"></use>
-                                        </svg>
-                                        <p class="mt-1">ارسال 1 روز کاری</p>
-                                    </li>
-                                </ul>
-                                <span class="flex items-center gap-x-1 text-gray-700 dark:text-gray-300 font-DanaMedium mt-4">
-                                    <p class="font-DanaMedium text-xl">@item.Price.ToString("n0")</p>
-                                    <p class="text-lg">تومان</p>
-                                </span>
-                                <span onclick="removeItem(@item.CartItemId)" class="absolute bottom-3 left-0 text-blue-500 flex sm:hidden items-center gap-x-1 text-sm cursor-pointer">
-                                    <p class="hidden sm:flex">حذف کالا</p>
-                                    <p class="flex sm:hidden">حذف</p>
+                            <div class="hidden sm:flex items-end justify-between flex-col">
+                                @* <svg class="w-5 h-5 cursor-pointer">
+                                <use href="#x-mark"></use>
+                            </svg> *@
+                                <span onclick="removeItem(@item.CartItemId)" class="absolute bottom-5 text-blue-500 hover:ml-2 duration-300 transition-all flex items-center gap-x-1 text-sm cursor-pointer">
+                                    <p class="hidden md:flex">حذف کالا</p>
+                                    <p class="flex md:hidden">حذف</p>
                                     <svg class="w-4 h-4">
                                         <use href="#chevron-left"></use>
                                     </svg>
                                 </span>
-                                <svg class=" flex sm:hidden absolute top-0 left-0 w-5 h-5">
-                                    <use href="#close"></use>
-                                </svg>
                             </div>
                         </div>
-                        <div class="hidden sm:flex items-end justify-between flex-col">
-                            @* <svg class="w-5 h-5 cursor-pointer">
-                                <use href="#x-mark"></use>
-                            </svg> *@
-                            <span onclick="removeItem(@item.CartItemId)" class="absolute bottom-5 text-blue-500 hover:ml-2 duration-300 transition-all flex items-center gap-x-1 text-sm cursor-pointer">
-                                <p class="hidden md:flex">حذف کالا</p>
-                                <p class="flex md:hidden">حذف</p>
-                                <svg class="w-4 h-4">
-                                    <use href="#chevron-left"></use>
-                                </svg>
-                            </span>
-                        </div>
-                    </div>
+                    }
                 }
             </div>
         </div>
+        @if (Model.CartItemsCount > 0)
+        {
+            <!-- PRICE BOX -->
+            <div class="w-full lg:w-1/4 lg:sticky top-5 flex flex-col gap-y-4">
+                <!-- PRICE -->
+                <ul class="child:flex child:items-center child:justify-between space-y-8">
+                    <li>
+                        <p>قیمت کالاها</p>
+                        <p class="flex gap-x-1 text-gray-600 dark:text-gray-300 ">@Model.TotalPrice.ToString("n0") <span class="hidden xl:flex">تومان</span></p>
+                    </li>
+                    <li>
+                        <p>تخفیف </p>
+                        <p class="font-DanaMedium text-gray-700 dark:text-gray-200">۰ تومان  </p>
+                    </li>
+                    <li class="border-t-2 border-dashed border-gray-400 pt-8">
+                        <p> مبلغ نهایی  :</p>
+                        <p>@Model.TotalPrice.ToString("n0") تومان</p>
+                    </li>
+                </ul>
 
-        <!-- PRICE BOX -->
-        <div class="w-full lg:w-1/4 lg:sticky top-5 flex flex-col gap-y-4">
-            <!-- PRICE -->
-            <ul class="child:flex child:items-center child:justify-between space-y-8">
-                <li>
-                    <p>قیمت کالاها</p>
-                    <p class="flex gap-x-1 text-gray-600 dark:text-gray-300 ">@Model.TotalPrice.ToString("n0") <span class="hidden xl:flex">تومان</span></p>
-                </li>
-                <li>
-                    <p>تخفیف </p>
-                    <p class="font-DanaMedium text-gray-700 dark:text-gray-200">۰ تومان  </p>
-                </li>
-                <li class="border-t-2 border-dashed border-gray-400 pt-8">
-                    <p> مبلغ نهایی  :</p>
-                    <p>@Model.TotalPrice.ToString("n0") تومان</p>
-                </li>
-            </ul>
+                <a href="/Pay/index" class="w-full mt-4 flex items-center gap-x-1 justify-center bg-blue-500 text-white hover:bg-blue-600 transition-all rounded-lg shadow py-2">
+                    تایید و تکمیل سفارش
+                    <svg class="w-5 h-5">
+                        <use href="#shopping-bag"></use>
+                    </svg>
+                </a>
 
-            <a href="/Pay/index" class="w-full mt-4 flex items-center gap-x-1 justify-center bg-blue-500 text-white hover:bg-blue-600 transition-all rounded-lg shadow py-2">
-                تایید و تکمیل سفارش
-                <svg class="w-5 h-5">
-                    <use href="#shopping-bag"></use>
-                </svg>
-            </a>
-
-        </div>
+            </div>
+        }
     </section>
 
 </main>

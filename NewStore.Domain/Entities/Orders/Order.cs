@@ -1,6 +1,5 @@
 ﻿using NewStore.Domain.Entities.Common;
 using NewStore.Domain.Entities.Finances;
-using NewStore.Domain.Entities.Product;
 using NewStore.Domain.Entities.Users;
 using System.Collections.Generic;
 

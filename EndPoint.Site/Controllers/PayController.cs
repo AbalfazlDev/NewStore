@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using NewStore.Application.Interfaces.FacadPatterns;
 using NewStore.Application.Services.Carts;
 using NewStore.Application.Services.Finances.Commands.AddRequest;
+using NewStore.Application.Services.Orders.Commands.AddNewOrder;
 using NewStore.Common.Dto;
 using NewStore.Domain.Entities.Carts;
 using Newtonsoft.Json;
+using System;
 using System.Text;
 using ZarinPal.Class;
 
@@ -38,7 +40,7 @@ namespace EndPoint.Site.Controllers
             if (!resCart.IsSuccess | !resCart.Data.CartItems.Any())
                 return Json("سبدخرید خالی است");
 
-            ResultDto<ResultRequestPay> resRequestPay = _financesFacad.AddRequestPay.Execute(resCart.Data.TotalPrice, userId.Value);
+            ResultDto<ResultRequestPay> resRequestPay = _financesFacad.AddRequestPay.Execute(resCart.Data.TotalPrice, userId.Value, resCart.Data.CartId);
             if (resCart.Data.TotalPrice > 0)
             {
                 var client = new HttpClient();
@@ -51,6 +53,7 @@ namespace EndPoint.Site.Controllers
                     description = "تست پرداخت",
                     metadata = new
                     {
+                        order_id = resRequestPay.Data.RequestPayId.ToString(),
                         email = resRequestPay.Data.Email,
                         mobile = "09120000000"
                     }
@@ -71,7 +74,7 @@ namespace EndPoint.Site.Controllers
                 if (result.data.code == 100)
                 {
                     string authority = result.data.authority;
-
+                    _financesFacad.SetRequestAuthority.Execute(resRequestPay.Data.RequestPayId, authority);
                     // STEP 2: Redirect user to payment page
                     return Redirect("https://sandbox.zarinpal.com/pg/StartPay/" + authority);
                 }
@@ -83,11 +86,11 @@ namespace EndPoint.Site.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Verify(Guid guid, string Authority, string Status)
+        public async Task<IActionResult> Verify(string Authority, string Status)
         {
-            var requestPay = _financesFacad.GetRequestPay.Execute(guid);
+            var requestPay = _financesFacad.GetRequestPay.Execute(Authority);
             if (requestPay.IsSuccess == false)
-                return Content("سبدخرید یافت نشد");
+                return Content("درخواستی یافت نشد");
             // Authority comes from ZarinPal (NOT manual input)
             if (Status != "OK")
                 return Content("عملیات کنسل شد");
@@ -111,13 +114,21 @@ namespace EndPoint.Site.Controllers
 
             var responseBody = await response.Content.ReadAsStringAsync();
             dynamic result = JsonConvert.DeserializeObject(responseBody);
-
+            long receiveRequestId = (long)result.data.order_id;
             if (result.data.code == 100)
             {
-                long? userId = Utilities.ClaimUtilities.GetUserId(User);
-                GetCartDto cart = _cartService.GetCart(_cookiesManager.GetBrowserId(HttpContext), userId.Value).Data;
-                _orderFacad.AddNewOrder.Execute(guid,cart.CartId, result.data.ref_id);
-                return RedirectToAction("index", "order");
+                if (requestPay.Data.RequestId == receiveRequestId)
+                {
+                    RequestAddNewOrder requestAddNewOrder = new RequestAddNewOrder()
+                    {
+                        RefId = result.data.ref_id,
+                        CartId = requestPay.Data.CartId.Value,
+                        RequestPayId = requestPay.Data.RequestId
+                    };
+                    _orderFacad.AddNewOrder.Execute(requestAddNewOrder);
+                    return RedirectToAction("index", "AccountCenter");
+                }
+
                 //return Content("عملیات با موفقیت انجام شد" + result.data.ref_id);
             }
 

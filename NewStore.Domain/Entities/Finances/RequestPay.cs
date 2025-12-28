@@ -12,6 +12,7 @@ namespace NewStore.Domain.Entities.Finances
 
         public virtual User User { get; set; }
         public long UserId { get; set; }
+        public long? CartId { get; set; }
 
         public int Amount { get; set; }
         public bool IsPay { get; set; }

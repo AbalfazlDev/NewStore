@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NewStore.Persistence.Context;
 
@@ -11,9 +12,11 @@ using NewStore.Persistence.Context;
 namespace NewStore.Persistence.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20251226200607_add_orderId_to_RequestPay")]
+    partial class add_orderId_to_RequestPay
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,9 +113,6 @@ namespace NewStore.Persistence.Migrations
                     b.Property<string>("Authority")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("CartId")
-                        .HasColumnType("bigint");
-
                     b.Property<Guid>("Guid")
                         .HasColumnType("uniqueidentifier");
 
@@ -124,6 +124,9 @@ namespace NewStore.Persistence.Migrations
 
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
+
+                    b.Property<long?>("OrderId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("PayDate")
                         .HasColumnType("datetime2");
@@ -141,6 +144,10 @@ namespace NewStore.Persistence.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique()
+                        .HasFilter("[OrderId] IS NOT NULL");
 
                     b.HasIndex("UserId");
 
@@ -213,9 +220,6 @@ namespace NewStore.Persistence.Migrations
                     b.Property<long>("RequestId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("RequestPayId")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
 
@@ -223,8 +227,6 @@ namespace NewStore.Persistence.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RequestPayId");
 
                     b.HasIndex("UserId");
 
@@ -591,6 +593,10 @@ namespace NewStore.Persistence.Migrations
 
             modelBuilder.Entity("NewStore.Domain.Entities.Finances.RequestPay", b =>
                 {
+                    b.HasOne("NewStore.Domain.Entities.Order.Order", null)
+                        .WithOne("RequestPay")
+                        .HasForeignKey("NewStore.Domain.Entities.Finances.RequestPay", "OrderId");
+
                     b.HasOne("NewStore.Domain.Entities.Users.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -602,17 +608,11 @@ namespace NewStore.Persistence.Migrations
 
             modelBuilder.Entity("NewStore.Domain.Entities.Order.Order", b =>
                 {
-                    b.HasOne("NewStore.Domain.Entities.Finances.RequestPay", "RequestPay")
-                        .WithMany()
-                        .HasForeignKey("RequestPayId");
-
                     b.HasOne("NewStore.Domain.Entities.Users.User", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("RequestPay");
 
                     b.Navigation("User");
                 });
@@ -706,6 +706,8 @@ namespace NewStore.Persistence.Migrations
             modelBuilder.Entity("NewStore.Domain.Entities.Order.Order", b =>
                 {
                     b.Navigation("OrdersDetails");
+
+                    b.Navigation("RequestPay");
                 });
 
             modelBuilder.Entity("NewStore.Domain.Entities.Product.Category", b =>

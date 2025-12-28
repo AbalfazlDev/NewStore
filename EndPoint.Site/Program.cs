@@ -109,10 +109,10 @@ app.MapControllerRoute(
 );
 
 //Redirect root → /products/index
-app.MapGet("/", context =>
-{
-    context.Response.Redirect("/cart/index");
-return Task.CompletedTask;
-});
+//app.MapGet("/", context =>
+//{
+//    context.Response.Redirect("/cart/index");
+//return Task.CompletedTask;
+//});
 
 app.Run();
